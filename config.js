@@ -12,3 +12,9 @@ const config = {
   "everyone": "831199788728844348",
 };
 module.exports = config;
+
+/*
+git commit -m "TEXTE A COMMIT"
+git push
+git push heroku main 
+*/
