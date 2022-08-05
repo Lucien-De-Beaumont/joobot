@@ -51,14 +51,12 @@ module.exports = {
                 else if (choice == "feuille") {
                     embed.setColor('#00FF00')
                 }    
-
-            message.edit({ embeds: [embed], components: [] })
-
         } else if (difficulty == "\`\`\`🔴 | Expert\`\`\`") {
             embed.addField('Votre choix', `\`\`\`✂️ | Ciseaux\`\`\``, false)
             embed.addField('Le choix d\'Izu', `\`\`\`🪨 | Pierre\`\`\``, false)
             embed.addField('Résultat', `\`\`\`🔴 | Vous avez perdu !\`\`\``, false)
             embed.setColor('#00FF00')
         }
+        message.edit({ embeds: [embed], components: [] })
     }
 }
