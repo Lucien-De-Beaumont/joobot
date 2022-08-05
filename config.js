@@ -14,6 +14,7 @@ const config = {
 module.exports = config;
 
 /*
+git add .
 git commit -m "TEXTE A COMMIT"
 git push
 git push heroku main 
