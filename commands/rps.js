@@ -12,9 +12,9 @@ module.exports = {
         required: true,
         type: "STRING",
         choices: [
-            // { name: 'Facile', value: 'easy' },
+            { name: 'Facile', value: 'easy' },
             { name: 'Intermédiaire', value: 'normal' },
-            // { name: 'Expert', value: 'hard' },
+            { name: 'Expert', value: 'hard' },
         ]
     }],
     helpType: "fun",
