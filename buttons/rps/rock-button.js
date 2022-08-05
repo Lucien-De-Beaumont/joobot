@@ -14,14 +14,22 @@ module.exports = {
             "feuille": "📄 | Feuille",
             "ciseaux": "✂️ | Ciseaux",
         }
-        if (difficulty == "\`\`\`🟢 | Facile\`\`\`") {
 
+        const embed = new Discord.MessageEmbed()
+            .setTitle('Partie de Pierre-Feuille-Ciseaux')
+            .setTimestamp()
+            .setThumbnail(`${client.user.displayAvatarURL()}`)
+
+        if (difficulty == "\`\`\`🟢 | Facile\`\`\`") {
+            embed.addField('Votre choix', `\`\`\`🪨 | Pierre\`\`\``, false)
+            embed.addField('Le choix d\'Izu', `\`\`\`✂️ | Ciseaux\`\`\``, false)
+            embed.addField('Résultat', `\`\`\`🟢 | Vous avez gagné !\`\`\``, false)
+            embed.setColor('#00FF00')
         } else if (difficulty == "\`\`\`⚪ | Intermédiaire\`\`\`") {
             let randomizer = Math.ceil(Math.random() * choices.length)
             let randomized = randomizer - 1;
             let choice = choices[randomized]
             let result = ""
-            let color = ""
 
             if (choice == "feuille") {
                 result = "🔴 | Vous avez perdu !"
@@ -34,24 +42,21 @@ module.exports = {
             }
 
 
-            const embed = new Discord.MessageEmbed()
-                .setTitle('Partie de Pierre-Feuille-Ciseaux')
-                .setTimestamp()
-                .setThumbnail(`${client.user.displayAvatarURL()}`)
-                .addField('Votre choix', `\`\`\`🪨 | Pierre\`\`\``, false)
-                .addField('Le choix d\'Izu', `\`\`\`${equiChoiceText[choice]}\`\`\``, false)
-                .addField('Résultat', `\`\`\`${result}\`\`\``, false)
-                if (choice == "feuille") {
-                    embed.setColor('#FF0000') // gain
-                }
-                else if (choice == "ciseaux") {
-                    embed.setColor('#00FF00') // perte
-                }    
-
-            message.edit({ embeds: [embed], components: [] })
-
+            embed.addField('Votre choix', `\`\`\`🪨 | Pierre\`\`\``, false)
+            embed.addField('Le choix d\'Izu', `\`\`\`${equiChoiceText[choice]}\`\`\``, false)
+            embed.addField('Résultat', `\`\`\`${result}\`\`\``, false)
+            if (choice == "feuille") {
+                embed.setColor('#FF0000') // gain
+            }
+            else if (choice == "ciseaux") {
+                embed.setColor('#00FF00') // perte
+            }
         } else if (difficulty == "\`\`\`🔴 | Expert\`\`\`") {
-
+            embed.addField('Votre choix', `\`\`\`🪨 | Pierre\`\`\``, false)
+            embed.addField('Le choix d\'Izu', `\`\`\`📄 | Feuille\`\`\``, false)
+            embed.addField('Résultat', `\`\`\`🔴 | Vous avez perdu !\`\`\``, false)
+            embed.setColor('#00FF00')
         }
+        message.edit({ embeds: [embed], components: [] })
     }
 }
