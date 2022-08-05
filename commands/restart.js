@@ -1,7 +1,7 @@
 const config = require('../config');
 
 module.exports = {
-    name: "setslash",
+    name: "restart",
     description: "Actualisation des commandes",
     role: [config.dev['Mécabot']],
     hidden: true,
