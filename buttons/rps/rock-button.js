@@ -55,7 +55,7 @@ module.exports = {
             embed.addField('Votre choix', `\`\`\`🪨 | Pierre\`\`\``, false)
             embed.addField('Le choix d\'Izu', `\`\`\`📄 | Feuille\`\`\``, false)
             embed.addField('Résultat', `\`\`\`🔴 | Vous avez perdu !\`\`\``, false)
-            embed.setColor('#00FF00')
+            embed.setColor('#FF0000')
         }
         message.edit({ embeds: [embed], components: [] })
     }

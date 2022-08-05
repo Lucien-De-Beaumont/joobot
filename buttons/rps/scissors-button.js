@@ -16,9 +16,9 @@ module.exports = {
         }
 
         const embed = new Discord.MessageEmbed()
-        .setTitle('Partie de Pierre-Feuille-Ciseaux')
-        .setTimestamp()
-        .setThumbnail(`${client.user.displayAvatarURL()}`)
+            .setTitle('Partie de Pierre-Feuille-Ciseaux')
+            .setTimestamp()
+            .setThumbnail(`${client.user.displayAvatarURL()}`)
 
         if (difficulty == "\`\`\`🟢 | Facile\`\`\`") {
             embed.addField('Votre choix', `\`\`\`✂️ | Ciseaux\`\`\``, false)
@@ -42,20 +42,20 @@ module.exports = {
             }
 
 
-                embed.addField('Votre choix', `\`\`\`✂️ | Ciseaux\`\`\``, false)
-                embed.addField('Le choix d\'Izu', `\`\`\`${equiChoiceText[choice]}\`\`\``, false)
-                embed.addField('Résultat', `\`\`\`${result}\`\`\``, false)
-                if (choice == "pierre") {
-                    embed.setColor('#FF0000')
-                }
-                else if (choice == "feuille") {
-                    embed.setColor('#00FF00')
-                }    
+            embed.addField('Votre choix', `\`\`\`✂️ | Ciseaux\`\`\``, false)
+            embed.addField('Le choix d\'Izu', `\`\`\`${equiChoiceText[choice]}\`\`\``, false)
+            embed.addField('Résultat', `\`\`\`${result}\`\`\``, false)
+            if (choice == "pierre") {
+                embed.setColor('#FF0000')
+            }
+            else if (choice == "feuille") {
+                embed.setColor('#00FF00')
+            }
         } else if (difficulty == "\`\`\`🔴 | Expert\`\`\`") {
             embed.addField('Votre choix', `\`\`\`✂️ | Ciseaux\`\`\``, false)
             embed.addField('Le choix d\'Izu', `\`\`\`🪨 | Pierre\`\`\``, false)
             embed.addField('Résultat', `\`\`\`🔴 | Vous avez perdu !\`\`\``, false)
-            embed.setColor('#00FF00')
+            embed.setColor('#FF0000')
         }
         message.edit({ embeds: [embed], components: [] })
     }
