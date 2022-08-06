@@ -4,7 +4,7 @@ const config = require("../config");
 module.exports = {
     name: "say",
     description: "Se mettre dans la peau d'Izu",
-    role: [config.moderation['Fondateur'], config.moderation['SummerFonda'], config.moderation['Administrateur']],
+    role: [config.moderation['Fondateur'], config.moderation['Administrateur']],
     hidden: false,
     options: [{
         name: "channel",

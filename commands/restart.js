@@ -3,7 +3,7 @@ const config = require('../config');
 module.exports = {
     name: "restart",
     description: "Actualisation des commandes",
-    role: [config.dev['Mécabot']],
+    role: [config.dev['Mécano']],
     hidden: true,
     helpType: "dev",
 

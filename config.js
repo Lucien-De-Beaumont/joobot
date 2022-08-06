@@ -1,15 +1,13 @@
 const config = {
-  prefix: "t-",
   dev: {
-    "Mécabot": "982334830131949738",
+    "Mécano": "1003759145331195957",
   },
   moderation: {
-    "Fondateur": "831201529759006741",
-    "SummerFonda": "960581409855135784",
-    "Administrateur": "836294561214758933",
-    "Modérateur": "833621246284791930",
+    "Fondateur": "1003358879645712414",
+    "Administrateur": "1002488004847357952",
+    "Modérateur": "1003359884886151271",
   },
-  "everyone": "831199788728844348",
+  "guild": "1002135735241023548",
 };
 module.exports = config;
 

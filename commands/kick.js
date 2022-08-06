@@ -4,7 +4,7 @@ const config = require("../config");
 module.exports = {
     name: "kick",
     description: "Expulser un membre",
-    role: [config.moderation['Fondateur'], config.moderation['SummerFonda'], config.moderation['Administrateur'], config.moderation['Modérateur']],
+    role: [config.moderation['Fondateur'], config.moderation['Administrateur'], config.moderation['Modérateur']],
     hidden: false,
     options: [{
         name: "membre",
