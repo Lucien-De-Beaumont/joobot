@@ -7,7 +7,7 @@ module.exports = {
     role: [config.moderation['Fondateur'], config.moderation['Administrateur']],
     hidden: false,
     helpType: "fun",
-    underConstruction: true,
+    underConstruction: false,
 
     run(client, message) {
         const embed = new Discord.MessageEmbed()
