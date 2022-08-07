@@ -7,7 +7,7 @@ const Logger = require("./utils/Logger");
 const date = require('date-and-time');
 
 
-["buttons", "selects", "slashCommands"].forEach(
+["commands", "buttons", "selects", "slashCommands"].forEach(
   (x) => (client[x] = new Collection()),
 );
 

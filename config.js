@@ -1,4 +1,5 @@
 const config = {
+  prefix: 'dev-',
   dev: {
     "Mécano": "1003759145331195957",
   },

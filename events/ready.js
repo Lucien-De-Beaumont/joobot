@@ -10,7 +10,6 @@ module.exports = {
     async execute(client) {
         Logger.client('Je suis ON!')
         const guild = client.guilds.cache.get("1002135735241023548");
-        console.log(client.slashCommands.map(cmd => cmd))
-        // guild.commands.set(client.slashCommands.map(cmd => cmd));
+        guild.commands.set(client.slashCommands.map(cmd => cmd));
     },
 };

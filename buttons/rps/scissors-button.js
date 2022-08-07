@@ -1,7 +1,10 @@
 const Discord = require("discord.js");
+const config = require("../../config");
 
 module.exports = {
     name: "scissors-button",
+    role: [config['guild']],
+
     async runInteraction(client, interaction) {
         interaction.deferUpdate()
         const message = await interaction.fetchReply()

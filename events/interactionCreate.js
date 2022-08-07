@@ -19,7 +19,14 @@ module.exports = {
     if (interaction.isButton()) {
       const btn = client.buttons.get(interaction.customId);
       if (!btn) return interaction.reply("Ce bouton n'existe pas!");
-      btn.runInteraction(client, interaction);
+      roles = btn.role;
+      if (interaction.member === null) {
+        if (btn) btn.runInteraction(client, interaction);
+      } else if (interaction.member.roles.cache.some(r => roles.includes(r.id)) || interaction.member.id == '553231950958035004') {
+        if (btn) btn.runInteraction(client, interaction);
+      } else {
+        return interaction.reply({ text: "Vous n'avez pas les permissions nécessaires.", ephemeral: true });
+      }
     }
     if (interaction.isSelectMenu()) {
       const selectMenu = client.selects.get(interaction.customId);

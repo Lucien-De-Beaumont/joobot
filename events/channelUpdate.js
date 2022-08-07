@@ -20,7 +20,10 @@ module.exports = {
         }
 
         embed.setDescription(description)
-        client.channels.cache.get(`1005615949258436648`).messages.fetch('1005627170074394694').then(message => message.edit({ embeds: [embed] }))
+        client.channels.cache.get(`1005615949258436648`).messages.fetch({ limit: 1 }).then(messages => {
+            let lastMessage = messages.first();
+            client.channels.cache.get(`1005615949258436648`).messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed] }))
+        });
 
     },
 };
