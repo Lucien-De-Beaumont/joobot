@@ -9,7 +9,6 @@ module.exports = {
     helpType: "moderation",
 
     runInteraction(client, interaction) {
-
         const embed = new Discord.MessageEmbed()
             .setTitle(`Plan des environs`)
             .setTimestamp()
