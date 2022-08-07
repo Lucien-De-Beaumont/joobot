@@ -1,9 +1,19 @@
-const { MessageEmbed } = require("discord.js");
+const Discord = require("discord.js");
 const config = require("../config");
+const Logger = require("../utils/Logger");
 
 module.exports = {
   name: "guildMemberRemove",
   once: false,
   async execute(client, member) {
+    member.guild
+    const embed = new Discord.MessageEmbed()
+      .setTitle(`Un membre vient de partir 😢`)
+      .setImage(`${member.guild.iconURL()}`)
+      .setDescription(`Nous venons d'apprendre que Saiku-Oh nous a quitté, à une prochaine fois peut être !`)
+      .setTimestamp()
+      .setFooter({ text: member.guild.memberCount + ` personnes sur le serveur` })
+
+    client.channels.cache.get('1002141568251211856').send({ embeds: [embed] })
   },
 };
