@@ -1,6 +1,7 @@
 const { Client, Collection, MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 const config = require("./config");
 const dotenv = require("dotenv");
+const mongoose = require('mongoose')
 dotenv.config();
 const client = new Client({ intents: 3276799 });
 const Logger = require("./utils/Logger");

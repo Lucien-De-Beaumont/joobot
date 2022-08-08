@@ -11,7 +11,5 @@ module.exports = {
         Logger.client('Je suis ON!')
         const guild = client.guilds.cache.get("1002135735241023548");
         guild.commands.set(client.slashCommands.map(cmd => cmd));
-
-        const a = new Discord.WebhookClient()
     },
 };

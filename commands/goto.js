@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { guild } = require("../config");
 const config = require("../config");
 
 module.exports = {
@@ -54,6 +55,14 @@ module.exports = {
 
         member.roles.add(toBeAddedRole)
         member.roles.add(config.zones.roles['Catégorie'])
-        return interaction.reply({ content: `C'est parti ! Tu te diriges maintenant vers ${chosenChannelFullName} !`, ephemeral: true })
-    },
+
+        const embedLogger = new Discord.MessageEmbed()
+        .setTitle(`Changement de zone`)
+        .setAuthor({name: member.displayName, iconURL: member.displayAvatarURL()})
+        .addField(`Nouvelle zone`, `${member.displayName} est parti vers ${chosenChannelFullName}`)
+        .setTimestamp()
+        .setThumbnail(`${interaction.guild.iconURL()}`)
+
+        client.channels.cache.get(`1006227089265008750`).send({embeds: [embedLogger]})
+        return interaction.reply({ content: `C'est parti ! Tu te diriges maintenant vers ${chosenChannelFullName} !`, ephemeral: true })    },
 }
