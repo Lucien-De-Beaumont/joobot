@@ -36,7 +36,7 @@ module.exports = {
             return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
         }
 
-        if (!isImage(avatarURL)) { return interaction.reply({ content: `Oops! Ce lien ne semble pas rediriger vers une image!`, ephemeral: true }) }
+        if (!isImage(avatarURL)) { return interaction.reply({ content: `Oops! Ce lien ne semble pas rediriger vers une image  ( formats autorisés : \`jpg|jpeg|png|webp|avif|gif|svg\` ) !`, ephemeral: true }) }
         const button = new Discord.MessageActionRow()
             .addComponents(
                 new Discord.MessageButton()

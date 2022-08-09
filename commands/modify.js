@@ -34,6 +34,13 @@ module.exports = {
         let prefix = interaction.options.getString("prefixe")
         let option = interaction.options.getString("option")
         let newParameter = interaction.options.getString("donnee")
+
+        function isImage(url) {
+            return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+        }
+
+        if (option == 'iconURL' && !isImage(newParameter)) { return interaction.reply({ content: `Oops! Ce lien ne semble pas rediriger vers une image ( formats autorisés : \`jpg|jpeg|png|webp|avif|gif|svg\` )!`, ephemeral: true }) }
+
         db.query(`SELECT * FROM webhook WHERE discordid = '${interaction.member.id}' AND prefix='${prefix}'`, function (err0, results0) {
             if (!(results0.length && results0)) return interaction.reply(`Vous n'avez pas de personnage avec le préfixe suivant : \`${prefix}\``)
             db.query("UPDATE webhook SET " + option + "='" + newParameter+"'", function (err1, results1) {
