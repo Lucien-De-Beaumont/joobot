@@ -11,8 +11,7 @@ module.exports = {
     underConstruction: true,
 
     run(client, message) {
-        message.channel.fetchWebhooks()
-            .then(webhooks => console.log(webhooks))
+
     },
 
     runInteraction(client, interaction) {

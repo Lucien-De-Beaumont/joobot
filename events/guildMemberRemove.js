@@ -10,7 +10,7 @@ module.exports = {
     const embed = new Discord.MessageEmbed()
       .setTitle(`Un membre vient de partir 😢`)
       .setImage(`${member.guild.iconURL()}`)
-      .setDescription(`Nous venons d'apprendre que Saiku-Oh nous a quitté, à une prochaine fois peut être !`)
+      .setDescription(`Nous venons d'apprendre que ${member.displayName} nous a quitté, à une prochaine fois peut être !`)
       .setTimestamp()
       .setFooter({ text: member.guild.memberCount + ` personnes sur le serveur` })
 
