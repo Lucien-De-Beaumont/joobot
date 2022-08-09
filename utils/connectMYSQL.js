@@ -2,10 +2,10 @@ const mysql = require("mysql");
 
 const db = mysql.createPool({
     connectionLimit: 10,
-    host: "145.14.145.102",
-    user: "id19387237_admin",
-    password: "12345678910aA!",
-    database: "id19387237_heroicacademy",
+    host: "remotemysql.com",
+    user: "4eRw88wdtt",
+    password: "IIq4Rwgh38",
+    database: "4eRw88wdtt",
     charset: "utf8mb4",
 });
 

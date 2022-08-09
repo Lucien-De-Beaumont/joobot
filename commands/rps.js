@@ -3,7 +3,7 @@ const config = require("../config");
 
 module.exports = {
     name: "rps",
-    description: "Se mettre dans la peau d'Izu",
+    description: "Pierre, feuille, ciseaux !",
     role: [config['guild']],
     hidden: false,
     options: [{
