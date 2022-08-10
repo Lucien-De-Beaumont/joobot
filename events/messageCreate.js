@@ -7,9 +7,10 @@ module.exports = {
   once: false,
   async execute(client, message) {
     if (message.author.bot) return;
-
+    
     const webhooks = await message.guild.fetchWebhooks();
     const webhook = webhooks.find(wh => wh.token)
+
     await webhook.edit({
       channel: message.channel.id
     });
@@ -29,7 +30,6 @@ module.exports = {
         }
       })
     })
-    
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;
     const cmdName = args.shift().toLowerCase();
     if (!cmdName.length) return;
