@@ -29,7 +29,7 @@ module.exports = {
         }
       })
     })
-
+    
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;
     const cmdName = args.shift().toLowerCase();
     if (!cmdName.length) return;
