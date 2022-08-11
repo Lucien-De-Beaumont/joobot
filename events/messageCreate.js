@@ -46,8 +46,8 @@ module.exports = {
         username: webhookName,
         avatarURL: imgURL,
       });
-    } catch (err) {
-    }
+    } catch (err) {}
+    
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;
     const cmdName = args.shift().toLowerCase();
     if (!cmdName.length) return;
