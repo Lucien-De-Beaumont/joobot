@@ -47,7 +47,7 @@ module.exports = {
         avatarURL: imgURL,
       });
     } catch (err) {
-      
+
     }
 
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;
