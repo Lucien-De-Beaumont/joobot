@@ -18,13 +18,12 @@ module.exports = {
         required: true,
         type: "STRING",
         choices: [
-            { name: 'Nom', value: 'nom' },
             { name: 'Préfixe', value: 'prefix' },
             { name: 'Avatar', value: 'iconURL' },
         ]
     }, {
         name: "donnee",
-        description: "Quel doit-être le nouveau nom / préfixe / lien de l'avatar du bot ?",
+        description: "Quel doit-être le nouveau préfixe / lien de l'avatar du bot ?",
         required: true,
         type: "STRING",
     }],
@@ -41,9 +40,9 @@ module.exports = {
 
         if (option == 'iconURL' && !isImage(newParameter)) { return interaction.reply({ content: `Oops! Ce lien ne semble pas rediriger vers une image ( formats autorisés : \`jpg|jpeg|png|webp|avif|gif|svg\` )!`, ephemeral: true }) }
 
-        await db.query(`SELECT * FROM webhook WHERE discordid = '${interaction.member.id}' AND prefix='${prefix}'`, function (err0, results0) {
+        db.query(`SELECT * FROM webhook WHERE discordid = '${interaction.member.id}' AND prefix='${prefix}'`, function (err0, results0) {
             if (!(results0.length && results0)) return interaction.reply(`Vous n'avez pas de personnage avec le préfixe suivant : \`${prefix}\``)
-            db.query("UPDATE webhook SET " + option + "='" + newParameter+"'", function (err1, results1) {
+            db.query("UPDATE webhook SET " + option + "='" + newParameter+"' WHERE discordid = '"+interaction.member.id+"' AND prefix='"+prefix+"'", function (err1, results1) {
                 if (err1) return console.log(err1)
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`Mise à jour de ${results0[0].nom} effectuée`)

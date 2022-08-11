@@ -9,6 +9,7 @@ module.exports = async (client) => {
 
     if (!cmd.name) return Logger.warn(`${cmd.name}.js ➡  pas de nom`);
     if (!cmd.description && cmd.type == null) { return Logger.warn(`${cmd.name}.js ➡  pas de description`); }
+    Logger.command(`${cmd.name}.js`);
 
     if (cmd.underConstruction != true) {
       return client.slashCommands.set(cmd.name, cmd)
@@ -16,6 +17,5 @@ module.exports = async (client) => {
       return client.commands.set(cmd.name, cmd)
     }
 
-    Logger.command(`${cmd.name}.js`);
   });
 };

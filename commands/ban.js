@@ -37,7 +37,7 @@ module.exports = {
         const banEmbed = new Discord.MessageEmbed()
             .setTitle("Bannissement d'un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
-            .setAuthor({ name: `Banni par ${interaction.member.nickname}`, iconURL: `${interaction.member.displayAvatarURL()}` })
+            .setAuthor({ name: `Banni par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
             .addField("Membre banni", `<@${member.id}>`, false)
             .addField("Raison", `${banreason}`, false)
             .setColor('#ff0000')

@@ -28,7 +28,7 @@ module.exports = {
         const muteEmbed = new Discord.MessageEmbed()
             .setTitle("Réduction au silence d'un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
-            .setAuthor({ name: `Rendu muet par ${interaction.member.nickname}`, iconURL: `${interaction.member.displayAvatarURL()}` })
+            .setAuthor({ name: `Rendu muet par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
             .addField("Membre rendu muet", `<@${member.id}>`, false)
             .addField("Raison", `${muteReason}`, false)
             .setColor('#ff0000')

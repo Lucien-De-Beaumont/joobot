@@ -28,7 +28,7 @@ module.exports = {
         const kickEmbed = new Discord.MessageEmbed()
             .setTitle("Expulsion d'un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
-            .setAuthor({ name: `Expulsé par ${interaction.member.nickname}`, iconURL: `${interaction.member.displayAvatarURL()}` })
+            .setAuthor({ name: `Expulsé par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
             .addField("Membre expulsé", `<@${member.id}>`, false)
             .addField("Raison", `${kickreason}`, false)
             .setColor('#ff0000')

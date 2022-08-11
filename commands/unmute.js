@@ -28,7 +28,7 @@ module.exports = {
         const unmuteEmbed = new Discord.MessageEmbed()
             .setTitle("Don de la parole à un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
-            .setAuthor({ name: `Parole rendue par ${interaction.member.nickname}`, iconURL: `${interaction.member.displayAvatarURL()}` })
+            .setAuthor({ name: `Parole rendue par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
             .addField("Membre à qui la parole a été rendue", `<@${member.id}>`, false)
             .setColor('#ff0000')
             .setTimestamp()

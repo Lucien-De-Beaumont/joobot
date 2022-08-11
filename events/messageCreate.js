@@ -35,13 +35,14 @@ module.exports = {
       const webhook = webhooks.find(wh => wh.token == `${correctURL.slice(correctURL.lastIndexOf('/') + 1, correctURL.length)}`)
 
       await webhook.edit({
-        channel: message.channel.id
+        channel: message.channel.id,
+        name: webhookName
       });
 
       let args = message.content.slice(prefix.length).trim().split(/ +/g);
       let content = args.slice(0).join(" ").replace(prefix);
       message.delete()
-      webhook.send({
+      await webhook.send({
         content: content,
         username: webhookName,
         avatarURL: imgURL,
