@@ -7,29 +7,47 @@ module.exports = {
   once: false,
   async execute(client, message) {
     if (message.author.bot) return;
-    
-    const webhooks = await message.guild.fetchWebhooks();
-    const webhook = webhooks.find(wh => wh.token)
 
-    await webhook.edit({
-      channel: message.channel.id
-    });
+    let allResultsForURL = []
+    let correctURL
+    let prefix
+    let imgURL
+    let webhookName
+    let tester
 
     db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, function (err, results) {
-      results.forEach(element => {
-        if (message.content.startsWith(element.prefix)) {
-          let args = message.content.slice(element.prefix.length).trim().split(/ +/g);
-          let content = args.slice(0).join(" ").replace(element.prefix);
-          message.delete()
 
-          webhook.send({
-            content: content,
-            username: element.nom,
-            avatarURL: element.iconURL,
-          });
-        }
+      results.forEach(element => {
+        allResultsForURL.push(element.webhookURL)
       })
+
+      for (index in allResultsForURL) {
+        if (message.content.startsWith(results[index].prefix)) {
+          prefix = results[index].prefix;
+          webhookName = results[index].name;
+          imgURL = results[index].iconURL;
+          correctURL = results[index].webhookURL
+        }
+      }
     })
+    try {
+      const webhooks = await message.guild.fetchWebhooks()
+      const webhook = webhooks.find(wh => wh.token == `${correctURL.slice(correctURL.lastIndexOf('/') + 1, correctURL.length)}`)
+
+      await webhook.edit({
+        channel: message.channel.id
+      });
+
+      let args = message.content.slice(prefix.length).trim().split(/ +/g);
+      let content = args.slice(0).join(" ").replace(prefix);
+      message.delete()
+      webhook.send({
+        content: content,
+        username: webhookName,
+        avatarURL: imgURL,
+      });
+    } catch (err) {
+    }
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;
     const cmdName = args.shift().toLowerCase();
     if (!cmdName.length) return;
