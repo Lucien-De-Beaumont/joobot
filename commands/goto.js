@@ -19,6 +19,7 @@ module.exports = {
             { name: 'Bâtiment principal', value: 'bat' },
             { name: 'Forêt', value: 'foret' },
             { name: 'Ville', value: 'ville' },
+            { name: 'Futur Apocalyptique', value: 'futur' },
         ]
     }],
     helpType: "moderation",
@@ -47,6 +48,9 @@ module.exports = {
             case 'ville':
                 chosenChannelFullName = "la ville"
                 break;
+            case 'futur':
+                chosenChannelFullName = "le futur apocalyptique"
+                break;
 
         }
         for (role in config.zones.roles) {
@@ -57,12 +61,13 @@ module.exports = {
         member.roles.add(config.zones.roles['Catégorie'])
 
         const embedLogger = new Discord.MessageEmbed()
-        .setTitle(`Changement de zone`)
-        .setAuthor({name: member.displayName, iconURL: member.displayAvatarURL()})
-        .addField(`Nouvelle zone`, `${member.displayName} est parti vers ${chosenChannelFullName}`)
-        .setTimestamp()
-        .setThumbnail(`${interaction.guild.iconURL()}`)
+            .setTitle(`Changement de zone`)
+            .setAuthor({ name: member.displayName, iconURL: member.displayAvatarURL() })
+            .addField(`Nouvelle zone`, `${member.displayName} est parti vers ${chosenChannelFullName}`)
+            .setTimestamp()
+            .setThumbnail(`${interaction.guild.iconURL()}`)
 
-        client.channels.cache.get(`1006227089265008750`).send({embeds: [embedLogger]})
-        return interaction.reply({ content: `C'est parti ! Tu te diriges maintenant vers ${chosenChannelFullName} !`, ephemeral: true })    },
+        client.channels.cache.get(`1006227089265008750`).send({ embeds: [embedLogger] })
+        return interaction.reply({ content: `C'est parti ! Tu te diriges maintenant vers ${chosenChannelFullName} !`, ephemeral: true })
+    },
 }
