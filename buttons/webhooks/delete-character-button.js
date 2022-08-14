@@ -10,7 +10,6 @@ module.exports = {
     async runInteraction(client, interaction) {
         interaction.deferUpdate()
         const message = await interaction.fetchReply()
-
             db.query(`DELETE FROM webhook WHERE discordid = '${message.embeds[0].fields[2].value}' AND prefix='${message.embeds[0].fields[1].value}'`);
             if (interaction.member.id != message.embeds[0].fields[2].value) { return interaction.reply({ content: `Vous ne pouvez pas réagir à ce bouton !`, ephemeral: true }) }
             const embed = new Discord.MessageEmbed()
