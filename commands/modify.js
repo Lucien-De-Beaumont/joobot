@@ -19,6 +19,7 @@ module.exports = {
         type: "STRING",
         choices: [
             { name: 'Préfixe', value: 'prefix' },
+            { name: 'Nom', value: 'nom' },
             { name: 'Avatar', value: 'iconURL' },
         ]
     }, {

@@ -60,6 +60,8 @@ module.exports = {
             }, {
                 name: `Lien de l'avatar`, value: `${avatarURL}`, inline: true
             }, {
+                name: `Votre discord ID`, value: `${interaction.member.id}`, inline: true
+            }, {
                 name: `Exemple type d'utilisation`, value: `\`\`\`${prefix} Bonjour ! Je suis ${nom} !\`\`\``, inline: false
             }, {
                 name: `Retour du message`, value: `\`\`\`Bonjour ! Je suis ${nom} !\`\`\``, inline: false

@@ -11,6 +11,7 @@ module.exports = {
         interaction.deferUpdate()
         const message = await interaction.fetchReply()
 
+        if (interaction.member.id != message.embeds[0].fields[3].value) { return interaction.reply({ content: `Vous ne pouvez pas réagir à ce bouton !`, ephemeral: true }) }
         const embed = new Discord.MessageEmbed()
             .setTitle(`${message.embeds[0].title}`)
             .setDescription(`Personnage RP créé !`)

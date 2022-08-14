@@ -13,7 +13,6 @@ module.exports = {
     let prefix
     let imgURL
     let webhookName
-    let tester
 
     db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, function (err, results) {
 
@@ -24,7 +23,7 @@ module.exports = {
       for (index in allResultsForURL) {
         if (message.content.startsWith(results[index].prefix)) {
           prefix = results[index].prefix;
-          webhookName = results[index].name;
+          webhookName = results[index].nom;
           imgURL = results[index].iconURL;
           correctURL = results[index].webhookURL
         }
