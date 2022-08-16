@@ -31,7 +31,7 @@ module.exports = {
     let webhooks = await message.channel.fetchWebhooks()
     let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
-    console.log('msg received')
+    console.log(typeof prefix)
     if (typeof prefix != 'undefined') {
       let args = message.content.slice(prefix.length).trim().split(/ +/g);
       let content = args.slice(0).join(" ").replace(prefix);
@@ -56,7 +56,7 @@ module.exports = {
       }
 
     }
-    args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;
     const cmdName = args.shift().toLowerCase();
