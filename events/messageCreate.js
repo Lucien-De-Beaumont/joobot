@@ -35,30 +35,31 @@ module.exports = {
 
       console.log(typeof webhook)
 
-      if (typeof webhook == 'undefined') {
-        let args = message.content.slice(prefix.length).trim().split(/ +/g);
-        let content = args.slice(0).join(" ").replace(prefix);
-        console.log(prefix)
-        message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
-          wb.send({
+      if (message.startsWith(prefix)) {
+        if (typeof webhook == 'undefined') {
+          let args = message.content.slice(prefix.length).trim().split(/ +/g);
+          let content = args.slice(0).join(" ").replace(prefix);
+          console.log(prefix)
+          message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
+            wb.send({
+              content: content,
+              username: webhookName,
+              avatarURL: imgURL,
+            });
+          })
+        } else {
+          let args = message.content.slice(prefix.length).trim().split(/ +/g);
+          let content = args.slice(0).join(" ").replace(prefix);
+          console.log(prefix)
+
+          await webhook.send({
             content: content,
             username: webhookName,
             avatarURL: imgURL,
           });
-        })
-      } else {
-        let args = message.content.slice(prefix.length).trim().split(/ +/g);
-        let content = args.slice(0).join(" ").replace(prefix);
-        console.log(prefix)
-
-        await webhook.send({
-          content: content,
-          username: webhookName,
-          avatarURL: imgURL,
-        });
+        }
+        message.delete()
       }
-      message.delete()
-
     } catch (err) {
 
     }
