@@ -28,7 +28,7 @@ module.exports = {
       }
     })
 
-    if (prefix && prefix.length) {
+    try {
       let webhooks = await message.channel.fetchWebhooks()
       let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
@@ -51,6 +51,8 @@ module.exports = {
           avatarURL: imgURL,
         });
       }
+
+    } catch (err) {
 
     }
 
