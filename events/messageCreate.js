@@ -9,9 +9,9 @@ module.exports = {
     if (message.author.bot) return;
 
     let allResultsForDate = []
-    let prefix = ''
-    let imgURL = ''
-    let webhookName = ''
+    let prefix = '';
+    let imgURL
+    let webhookName
 
     db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, function (err, results) {
 
