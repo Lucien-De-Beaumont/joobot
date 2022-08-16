@@ -2,6 +2,27 @@ const config = require("../config");
 const Discord = require("discord.js");
 const db = require('../utils/connectMYSQL');
 const Logger = require("../utils/Logger");
+const { prefix } = require("../config");
+
+let allResultsForDate = []
+let imgURL
+let webhookName
+
+function query(discordid) {
+  db.query(`SELECT * FROM webhook WHERE discordid='${discordid}'`, function (err, results) {
+    results.forEach(element => {
+      allResultsForDate.push(element.date)
+    })
+
+    for (index in allResultsForDate) {
+      if (message.content.startsWith(results[index].prefix)) {
+        var prefix = results[index].prefix;
+        webhookName = results[index].nom;
+        imgURL = results[index].iconURL;
+      }
+    }
+  })
+}
 
 module.exports = {
   name: "messageCreate",
@@ -9,26 +30,8 @@ module.exports = {
   async execute(client, message) {
     if (message.author.bot) return;
 
-    let allResultsForDate = []
-    let imgURL
-    let webhookName
-
-    db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, function (err, results) {
-
-      results.forEach(element => {
-        allResultsForDate.push(element.date)
-      })
-
-      for (index in allResultsForDate) {
-        if (message.content.startsWith(results[index].prefix)) {
-          var prefix = results[index].prefix;
-          webhookName = results[index].nom;
-          imgURL = results[index].iconURL;
-        }
-      }
-      console.error('this prefix --> '+prefix)
-    })
-    console.error('this prefix --> '+prefix)
+    query(message.channel.id)
+    console.log(prefix)
 
     try {
       let webhooks = await message.channel.fetchWebhooks()
