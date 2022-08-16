@@ -2,7 +2,6 @@ const config = require("../config");
 const Discord = require("discord.js");
 const db = require('../utils/connectMYSQL');
 const Logger = require("../utils/Logger");
-const { prefix } = require("../config");
 
 let allResultsForDate = []
 let imgURL
@@ -16,7 +15,7 @@ function query(discordid) {
 
     for (index in allResultsForDate) {
       if (message.content.startsWith(results[index].prefix)) {
-        var prefix = results[index].prefix;
+        prefix = results[index].prefix;
         webhookName = results[index].nom;
         imgURL = results[index].iconURL;
       }
