@@ -34,7 +34,7 @@ module.exports = {
       let webhooks = await message.channel.fetchWebhooks()
       let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
-      console.log(webhooks)
+      console.log(webhook)
       let args = message.content.slice(prefix.length).trim().split(/ +/g);
       let content = args.slice(0).join(" ").replace(prefix);
       message.delete()
