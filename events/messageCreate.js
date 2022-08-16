@@ -8,8 +8,7 @@ module.exports = {
   async execute(client, message) {
     if (message.author.bot) return;
 
-    let allResultsForURL = []
-    let correctURL
+    let allResultsForDate = []
     let prefix
     let imgURL
     let webhookName
@@ -17,38 +16,45 @@ module.exports = {
     db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, function (err, results) {
 
       results.forEach(element => {
-        allResultsForURL.push(element.webhookURL)
+        allResultsForDate.push(element.date)
       })
 
-      for (index in allResultsForURL) {
+      for (index in allResultsForDate) {
         if (message.content.startsWith(results[index].prefix)) {
           prefix = results[index].prefix;
           webhookName = results[index].nom;
           imgURL = results[index].iconURL;
-          correctURL = results[index].webhookURL
         }
       }
     })
-    try {
-      const webhooks = await message.guild.fetchWebhooks()
-      const webhook = webhooks.find(wh => wh.token == `${correctURL.slice(correctURL.lastIndexOf('/') + 1, correctURL.length)}`)
 
-      await webhook.edit({
-        channel: message.channel.id,
-        name: webhookName
-      });
+    if (prefix && prefix.length) {
+      let webhooks = await message.channel.fetchWebhooks()
+      let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
       let args = message.content.slice(prefix.length).trim().split(/ +/g);
       let content = args.slice(0).join(" ").replace(prefix);
       message.delete()
-      await webhook.send({
-        content: content,
-        username: webhookName,
-        avatarURL: imgURL,
-      });
-    } catch (err) {
+
+      if (typeof webhook == 'undefined') {
+        message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
+          wb.send({
+            content: content,
+            username: webhookName,
+            avatarURL: imgURL,
+          });
+        })
+      } else {
+        await webhook.send({
+          content: content,
+          username: webhookName,
+          avatarURL: imgURL,
+        });
+      }
 
     }
+
+    let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;
     const cmdName = args.shift().toLowerCase();
