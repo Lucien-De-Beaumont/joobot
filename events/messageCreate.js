@@ -12,8 +12,9 @@ module.exports = {
     let allResultsForDate = []
     let imgURL
     let webhookName
+    let prefix
 
-    db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, function (err, results) {
+    db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, async function (err, results) {
 
       results.forEach(element => {
         allResultsForDate.push(element.date)
@@ -21,47 +22,42 @@ module.exports = {
 
       for (index in allResultsForDate) {
         if (message.content.startsWith(results[index].prefix)) {
-          var prefix = results[index].prefix;
+          prefix = results[index].prefix;
           webhookName = results[index].nom;
           imgURL = results[index].iconURL;
+
+          let webhooks = await message.channel.fetchWebhooks()
+          let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
+
+          if (message.content.startsWith(prefix)) {
+            if (typeof webhook == 'undefined') {
+              let args = message.content.slice(prefix.length).trim().split(/ +/g);
+              let content = args.slice(0).join(" ").replace(prefix);
+              console.log(prefix)
+              message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
+                wb.send({
+                  content: content,
+                  username: webhookName,
+                  avatarURL: imgURL,
+                });
+              })
+            } else {
+              let args = message.content.slice(prefix.length).trim().split(/ +/g);
+              let content = args.slice(0).join(" ").replace(prefix);
+              console.log(prefix)
+
+              await webhook.send({
+                content: content,
+                username: webhookName,
+                avatarURL: imgURL,
+              });
+            }
+            message.delete()
+          }
         }
       }
-      console.error('this prefix --> '+prefix)
+
     })
-    console.error('this prefix --> '+prefix)
-
-    try {
-      let webhooks = await message.channel.fetchWebhooks()
-      let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
-
-      if (message.content.startsWith(prefix)) {
-        if (typeof webhook == 'undefined') {
-          let args = message.content.slice(prefix.length).trim().split(/ +/g);
-          let content = args.slice(0).join(" ").replace(prefix);
-          console.log(prefix)
-          message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
-            wb.send({
-              content: content,
-              username: webhookName,
-              avatarURL: imgURL,
-            });
-          })
-        } else {
-          let args = message.content.slice(prefix.length).trim().split(/ +/g);
-          let content = args.slice(0).join(" ").replace(prefix);
-          console.log(prefix)
-
-          await webhook.send({
-            content: content,
-            username: webhookName,
-            avatarURL: imgURL,
-          });
-        }
-        message.delete()
-      }
-    } catch (err) {
-      console.log(err)
-    }
 
     let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 
