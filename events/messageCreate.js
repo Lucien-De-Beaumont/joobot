@@ -9,7 +9,6 @@ module.exports = {
     if (message.author.bot) return;
 
     let allResultsForDate = []
-    let prefix = '';
     let imgURL
     let webhookName
 
@@ -37,7 +36,6 @@ module.exports = {
       message.delete()
 
       if (typeof webhook == 'undefined') {
-        console.log('webhook is undefined')
         message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
           wb.send({
             content: content,
@@ -46,15 +44,14 @@ module.exports = {
           });
         })
       } else {
-        console.log('webhook is defined')
         await webhook.send({
           content: content,
           username: webhookName,
           avatarURL: imgURL,
         });
       }
-
     }
+
     let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;
