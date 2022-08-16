@@ -9,6 +9,7 @@ module.exports = {
     if (message.author.bot) return;
 
     let allResultsForDate = []
+    let prefix
     let imgURL
     let webhookName
 
@@ -27,10 +28,10 @@ module.exports = {
       }
     })
 
-    let webhooks = await message.channel.fetchWebhooks()
-    let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
+    try {
+      let webhooks = await message.channel.fetchWebhooks()
+      let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
-    if (typeof prefix != 'undefined') {
       let args = message.content.slice(prefix.length).trim().split(/ +/g);
       let content = args.slice(0).join(" ").replace(prefix);
       message.delete()
@@ -50,6 +51,9 @@ module.exports = {
           avatarURL: imgURL,
         });
       }
+
+    } catch (err) {
+
     }
 
     let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
