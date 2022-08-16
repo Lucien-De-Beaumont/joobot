@@ -39,7 +39,7 @@ module.exports = {
       let content = args.slice(0).join(" ").replace(prefix);
       message.delete()
 
-      console.log('typeof webhook:' + typeof webhook)
+      console.log('typeof webhook:' + (typeof webhook))
       if (typeof webhook == 'undefined') {
         message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
           wb.send({
