@@ -10,7 +10,6 @@ module.exports = {
     if (message.author.bot) return;
 
     let allResultsForDate = []
-    let prefix
     let imgURL
     let webhookName
 
@@ -22,13 +21,14 @@ module.exports = {
 
       for (index in allResultsForDate) {
         if (message.content.startsWith(results[index].prefix)) {
-          prefix = results[index].prefix;
+          var prefix = results[index].prefix;
           webhookName = results[index].nom;
           imgURL = results[index].iconURL;
-          console.error('this prefix --> '+prefix)
         }
       }
+      console.error('this prefix --> '+prefix)
     })
+    console.error('this prefix --> '+prefix)
 
     try {
       let webhooks = await message.channel.fetchWebhooks()
