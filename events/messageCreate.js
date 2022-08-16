@@ -32,7 +32,7 @@ module.exports = {
     let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
     if (typeof prefix == 'undefined') {
-      return console.log('nope!')
+      return
     }
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let content = args.slice(0).join(" ").replace(prefix);
