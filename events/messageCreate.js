@@ -9,9 +9,9 @@ module.exports = {
     if (message.author.bot) return;
 
     let allResultsForDate = []
-    let prefix
-    let imgURL
-    let webhookName
+    let prefix = ''
+    let imgURL = ''
+    let webhookName = ''
 
     db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, function (err, results) {
 
@@ -31,7 +31,6 @@ module.exports = {
     let webhooks = await message.channel.fetchWebhooks()
     let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
-    console.log(typeof prefix)
     if (typeof prefix != 'undefined') {
       let args = message.content.slice(prefix.length).trim().split(/ +/g);
       let content = args.slice(0).join(" ").replace(prefix);
