@@ -10,7 +10,7 @@ module.exports = {
     if (message.author.bot) return;
 
     let allResultsForDate = []
-    let prefix
+    let prefix = 'ldb!'
     let imgURL
     let webhookName
 
