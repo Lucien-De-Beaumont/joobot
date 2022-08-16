@@ -26,35 +26,35 @@ module.exports = {
           webhookName = results[index].nom;
           imgURL = results[index].iconURL;
 
-          let webhooks = await message.channel.fetchWebhooks()
-          let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
-
-          if (message.content.startsWith(prefix)) {
-            if (typeof webhook == 'undefined') {
-              let args = message.content.slice(prefix.length).trim().split(/ +/g);
-              let content = args.slice(0).join(" ").replace(prefix);
-              console.log(prefix)
-              message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
-                wb.send({
-                  content: content,
-                  username: webhookName,
-                  avatarURL: imgURL,
-                });
-              })
-            } else {
-              let args = message.content.slice(prefix.length).trim().split(/ +/g);
-              let content = args.slice(0).join(" ").replace(prefix);
-              console.log(prefix)
-
-              await webhook.send({
-                content: content,
-                username: webhookName,
-                avatarURL: imgURL,
-              });
-            }
-            message.delete()
-          }
         }
+      }
+      let webhooks = await message.channel.fetchWebhooks()
+      let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
+
+      if (message.content.startsWith(prefix)) {
+        if (typeof webhook == 'undefined') {
+          let args = message.content.slice(prefix.length).trim().split(/ +/g);
+          let content = args.slice(0).join(" ").replace(prefix);
+          console.log(prefix)
+          message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
+            wb.send({
+              content: content,
+              username: webhookName,
+              avatarURL: imgURL,
+            });
+          })
+        } else {
+          let args = message.content.slice(prefix.length).trim().split(/ +/g);
+          let content = args.slice(0).join(" ").replace(prefix);
+          console.log(prefix)
+
+          await webhook.send({
+            content: content,
+            username: webhookName,
+            avatarURL: imgURL,
+          });
+        }
+        message.delete()
       }
 
     })
