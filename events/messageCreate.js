@@ -10,7 +10,7 @@ module.exports = {
     if (message.author.bot) return;
 
     let allResultsForDate = []
-    let prefix = 'ldb!'
+    let prefix
     let imgURL
     let webhookName
 
@@ -25,6 +25,7 @@ module.exports = {
           prefix = results[index].prefix;
           webhookName = results[index].nom;
           imgURL = results[index].iconURL;
+          console.error('this prefix --> '+prefix)
         }
       }
     })
@@ -33,9 +34,7 @@ module.exports = {
       let webhooks = await message.channel.fetchWebhooks()
       let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
-      console.log(typeof webhook)
-
-      if (message.startsWith(prefix)) {
+      if (message.content.startsWith(prefix)) {
         if (typeof webhook == 'undefined') {
           let args = message.content.slice(prefix.length).trim().split(/ +/g);
           let content = args.slice(0).join(" ").replace(prefix);
@@ -61,7 +60,7 @@ module.exports = {
         message.delete()
       }
     } catch (err) {
-
+      console.log(err)
     }
 
     let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
