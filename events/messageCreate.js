@@ -4,8 +4,6 @@ const db = require('../utils/connectMYSQL');
 const Logger = require("../utils/Logger");
 
 let allResultsForDate = []
-let imgURL
-let webhookName
 
 function query(discordid) {
   db.query(`SELECT * FROM webhook WHERE discordid='${discordid}'`, function (err, results) {
@@ -15,9 +13,9 @@ function query(discordid) {
 
     for (index in allResultsForDate) {
       if (message.content.startsWith(results[index].prefix)) {
-        prefix = results[index].prefix;
-        webhookName = results[index].nom;
-        imgURL = results[index].iconURL;
+        var prefix = results[index].prefix;
+        var webhookName = results[index].nom;
+        var imgURL = results[index].iconURL;
       }
     }
   })
