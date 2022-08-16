@@ -1,6 +1,7 @@
 const config = require("../config");
 const Discord = require("discord.js");
 const db = require('../utils/connectMYSQL');
+const Logger = require("../utils/Logger");
 
 module.exports = {
   name: "messageCreate",
@@ -29,6 +30,7 @@ module.exports = {
     })
 
     try {
+      Logger.message(message.author.username)
       let webhooks = await message.channel.fetchWebhooks()
       let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 

@@ -9,8 +9,8 @@ function error(content) {
 function warn(content) {
   write(content, "black", "bgYellow", "WARN", false);
 }
-function typo(content) {
-  write(content, "black", "bgCyan", "TYPO", false);
+function message(content) {
+  write(content, "black", "bgCyan", "MESSAGE", false);
 }
 function buttons(content) {
   write(content, "black", "bgWhite", "BUTTONS", false);
@@ -41,4 +41,4 @@ function write(content, tagColor, bgTagColor, tag, error = false) {
   stream.write(item);
 }
 
-module.exports = { error, warn, command, event, buttons, typo, client, server };
+module.exports = { error, warn, command, event, buttons, message, client, server };
