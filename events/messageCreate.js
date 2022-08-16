@@ -53,7 +53,7 @@ module.exports = {
       }
 
     } catch (err) {
-
+      console.log(err)
     }
 
     let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
