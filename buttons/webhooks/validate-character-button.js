@@ -22,7 +22,7 @@ module.exports = {
         });
         message.delete()
         interaction.channel.send({ embeds: [embed] })
-        db.query(`INSERT INTO webhook SET nom = ${db.escape(embed.fields[0].value)}, prefix = ${db.escape(embed.fields[1].value)}, iconURL = '', date=${db.escape(date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'))}, discordid=${db.escape(interaction.member.id)}`, function (err, results) {
+        db.query(`INSERT INTO webhook SET nom = ${db.escape(embed.fields[0].value)}, prefix = ${db.escape(embed.fields[1].value)}, date=${db.escape(date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'))}, discordid=${db.escape(interaction.member.id)}`, function (err, results) {
             if (err) { return console.log(err) }
         })
     }
