@@ -42,7 +42,7 @@ module.exports = {
 
         db.query(`SELECT * FROM webhook WHERE discordid = ${db.escape(interaction.member.id)} AND prefix=${db.escape(prefix)}`, function (err0, results0) {
             if (!(results0.length && results0)) return interaction.reply(`Vous n'avez pas de personnage avec le préfixe suivant : \`${prefix}\``)
-            if (results0[0].prefix == prefix) {
+            if (results0[0].prefix == newParameter) {
                 return interaction.reply(`Vous avez déjà un personnage avec le préfixe suivant : \`${prefix}\``)
             }
             db.query(`UPDATE webhook SET ${db.escape(option).slice(1, db.escape(option).length - 1)} = ${db.escape(newParameter)} WHERE discordid = ${db.escape(interaction.member.id)} AND prefix=${db.escape(prefix)}`, function (err1, results1) {
