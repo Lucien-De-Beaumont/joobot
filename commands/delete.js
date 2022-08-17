@@ -18,7 +18,7 @@ module.exports = {
     async runInteraction(client, interaction) {
         let prefix = interaction.options.getString("prefixe")
 
-        db.query(`SELECT * FROM webhook WHERE discordid = '${db.escape(interaction.member.id)}' AND prefix='${db.escape(prefix)}'`, function (err0, results0) {
+        db.query(`SELECT * FROM webhook WHERE discordid = ${db.escape(interaction.member.id)} AND prefix=${db.escape(prefix)}`, function (err0, results0) {
             if(!(results0 && results0.length)) return interaction.reply(`Vous n'avez aucun personnage avec ce préfixe !`)
             const row = new Discord.MessageActionRow()
                 .addComponents(

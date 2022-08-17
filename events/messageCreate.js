@@ -14,7 +14,7 @@ module.exports = {
     let webhookName
     let prefix
 
-    db.query(`SELECT * FROM webhook WHERE discordid='${db.escape(message.author.id)}'`, async function (err, results) {
+    db.query(`SELECT * FROM webhook WHERE discordid=${db.escape(message.author.id)}`, async function (err, results) {
 
       results.forEach(element => {
         allResultsForDate.push(element.date)
@@ -35,7 +35,6 @@ module.exports = {
         if (typeof webhook == 'undefined') {
           let args = message.content.slice(prefix.length).trim().split(/ +/g);
           let content = args.slice(0).join(" ").replace(prefix);
-          console.log(prefix)
           message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
             wb.send({
               content: content,
@@ -46,7 +45,6 @@ module.exports = {
         } else {
           let args = message.content.slice(prefix.length).trim().split(/ +/g);
           let content = args.slice(0).join(" ").replace(prefix);
-          console.log(prefix)
 
           await webhook.send({
             content: content,

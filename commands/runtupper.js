@@ -27,7 +27,7 @@ module.exports = {
                     let created_at = student[st][element].created_at.trim()
                     let user_id = student[st][element].user_id.trim()
 
-                    req = req + `INSERT INTO webhook SET nom = '${db.escape(name)}', prefix = '${db.escape(prefix)}', iconURL = '${db.escape(avatar_url)}', date='${db.escape(date.format(new Date(created_at), 'YYYY-MM-DD HH:mm:ss'))}', discordid='${db.escape(user_id)}';`
+                    req = req + `INSERT INTO webhook SET nom = ${db.escape(name)}, prefix = ${db.escape(prefix)}, iconURL = ${db.escape(avatar_url)}, date=${db.escape(date.format(new Date(created_at), 'YYYY-MM-DD HH:mm:ss'))}, discordid=${db.escape(user_id)}`
                     // db.query(`INSERT INTO webhook SET nom = '${name}', prefix = '${prefix}', iconURL = '${avatar_url}', date='${date.format(new Date(created_at), 'YYYY-MM-DD HH:mm:ss')}', discordid='${user_id}'`, function (err, results) {
                     //     if (err) { return console.log(err) }
                     // })

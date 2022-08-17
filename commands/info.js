@@ -20,7 +20,7 @@ module.exports = {
         if (!interaction) return
         let prefix = interaction.options.getString("prefixe")
 
-        db.query(`SELECT * FROM webhook WHERE prefix='${db.escape(prefix)}'`, function (err0, results0) {
+        db.query(`SELECT * FROM webhook WHERE prefix=${db.escape(prefix)}`, function (err0, results0) {
             if (!(results0 && results0.length)) { return interaction.reply(`Aucun personnage RP avec le préfixe suivant n'existe : \`${prefix}\``) }
             const infoEmbed = new Discord.MessageEmbed()
                 .setTitle("Informations sur " + results0[0].nom)
