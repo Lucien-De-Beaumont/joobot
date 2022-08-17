@@ -14,7 +14,7 @@ module.exports = {
     let webhookName
     let prefix
 
-    db.query(`SELECT * FROM webhook WHERE discordid='${message.author.id}'`, async function (err, results) {
+    db.query(`SELECT * FROM webhook WHERE discordid='${db.escape(message.author.id)}'`, async function (err, results) {
 
       results.forEach(element => {
         allResultsForDate.push(element.date)

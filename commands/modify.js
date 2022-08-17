@@ -41,9 +41,9 @@ module.exports = {
 
         if (option == 'iconURL' && !isImage(newParameter)) { return interaction.reply({ content: `Oops! Ce lien ne semble pas rediriger vers une image ( formats autorisés : \`jpg|jpeg|png|webp|avif|gif|svg\` )!`, ephemeral: true }) }
 
-        db.query(`SELECT * FROM webhook WHERE discordid = '${interaction.member.id}' AND prefix='${prefix}'`, function (err0, results0) {
+        db.query(`SELECT * FROM webhook WHERE discordid = '${db.escape(interaction.member.id)}' AND prefix='${db.escape(prefix)}'`, function (err0, results0) {
             if (!(results0.length && results0)) return interaction.reply(`Vous n'avez pas de personnage avec le préfixe suivant : \`${prefix}\``)
-            db.query("UPDATE webhook SET " + option + "='" + newParameter+"' WHERE discordid = '"+interaction.member.id+"' AND prefix='"+prefix+"'", function (err1, results1) {
+            db.query(`UPDATE webhook SET ${db.escape(option)} = ${db.escape(newParameter)} WHERE discordid = ${db.escape(interaction.member.id)} AND prefix=${db.escape(prefix)}`, function (err1, results1) {
                 if (err1) return console.log(err1)
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`Mise à jour de ${results0[0].nom} effectuée`)
