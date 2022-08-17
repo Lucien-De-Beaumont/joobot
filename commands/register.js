@@ -37,37 +37,45 @@ module.exports = {
         }
 
         if (!isImage(avatarURL)) { return interaction.reply({ content: `Oops! Ce lien ne semble pas rediriger vers une image  ( formats autorisés : \`jpg|jpeg|png|webp|avif|gif|svg\` ) !`, ephemeral: true }) }
-        const button = new Discord.MessageActionRow()
-            .addComponents(
-                new Discord.MessageButton()
-                    .setCustomId('validate-character-button')
-                    .setLabel('✅ | Créer mon personnage')
-                    .setStyle('SUCCESS'),
-                new Discord.MessageButton()
-                    .setCustomId('refuse-character-button')
-                    .setLabel('❌ | Revenir en arrière')
-                    .setStyle('DANGER'),
-            )
-        const embed = new Discord.MessageEmbed()
-            .setTitle(`Validation de création d'un nouveau personnage`)
-            .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL() })
-            .setThumbnail(`${avatarURL}`)
-            .setDescription(`Merci de vérifier les informations fournies, les seules modifications possibles se restreignent à changer l'avatar de votre personnage.\nSi l'avatar n'apparaît pas dans le message, merci de considérer que celui n'est pas valide.\nEn conséquent, toute autre information est figée définitivement ( quoique modifiable par le <@&${config.dev['Mécano']}>, <@553231950958035004> ).`)
-            .addFields({
-                name: `Nom du personnage`, value: `${nom}`, inline: true
-            }, {
-                name: `Préfixe`, value: `${prefix}`, inline: true
-            }, {
-                name: `Lien de l'avatar`, value: `${avatarURL}`, inline: true
-            }, {
-                name: `Votre discord ID`, value: `${interaction.member.id}`, inline: true
-            }, {
-                name: `Exemple type d'utilisation`, value: `\`\`\`${prefix} Bonjour ! Je suis ${nom} !\`\`\``, inline: false
-            }, {
-                name: `Retour du message`, value: `\`\`\`Bonjour ! Je suis ${nom} !\`\`\``, inline: false
-            })
-            .setTimestamp()
 
-        interaction.reply({ embeds: [embed], components: [button] })
+        db.query(`SELECT * FROM webhook WHERE discordid='${interaction.member.id}' AND prefix='${prefix}'`, function (err, results) {
+            if (!(results && results.length)) {
+
+                const button = new Discord.MessageActionRow()
+                    .addComponents(
+                        new Discord.MessageButton()
+                            .setCustomId('validate-character-button')
+                            .setLabel('✅ | Créer mon personnage')
+                            .setStyle('SUCCESS'),
+                        new Discord.MessageButton()
+                            .setCustomId('refuse-character-button')
+                            .setLabel('❌ | Revenir en arrière')
+                            .setStyle('DANGER'),
+                    )
+                const embed = new Discord.MessageEmbed()
+                    .setTitle(`Validation de création d'un nouveau personnage`)
+                    .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL() })
+                    .setThumbnail(`${avatarURL}`)
+                    .setDescription(`Merci de vérifier les informations fournies, les seules modifications possibles se restreignent à changer l'avatar de votre personnage.\nSi l'avatar n'apparaît pas dans le message, merci de considérer que celui n'est pas valide.\nEn conséquent, toute autre information est figée définitivement ( quoique modifiable par le <@&${config.dev['Mécano']}>, <@553231950958035004> ).`)
+                    .addFields({
+                        name: `Nom du personnage`, value: `${nom}`, inline: true
+                    }, {
+                        name: `Préfixe`, value: `${prefix}`, inline: true
+                    }, {
+                        name: `Lien de l'avatar`, value: `${avatarURL}`, inline: true
+                    }, {
+                        name: `Votre discord ID`, value: `${interaction.member.id}`, inline: true
+                    }, {
+                        name: `Exemple type d'utilisation`, value: `\`\`\`${prefix} Bonjour ! Je suis ${nom} !\`\`\``, inline: false
+                    }, {
+                        name: `Retour du message`, value: `\`\`\`Bonjour ! Je suis ${nom} !\`\`\``, inline: false
+                    })
+                    .setTimestamp()
+
+                interaction.reply({ embeds: [embed], components: [button] })
+            } else {
+                interaction.reply({ content: `Vous avez déjà un personnage enregistré avec le préfixe \`${prefix}\` !` })
+            }
+        })
     },
 }
