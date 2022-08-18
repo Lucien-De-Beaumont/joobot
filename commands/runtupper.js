@@ -9,7 +9,7 @@ module.exports = {
     role: [config.dev['Mécano']],
     hidden: false,
     helpType: "fun",
-    underConstruction: true,
+    underConstruction: false,
     async run(client, message) {
         let rawdata = fs.readFileSync('tupper.json');
         let student = JSON.parse(rawdata);

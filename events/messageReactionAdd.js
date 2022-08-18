@@ -12,25 +12,36 @@ module.exports = {
                 if (results[0].discordid != user.id) { return }
                 reaction.message.delete()
             }
-            // if (reaction.emoji.name == '📝') {
-            //     const filter = msg => results[0].discordid == user.id && msg.channel.type == 'DM'
-            //     const collector = reaction.message.channel.createMessageCollector({ filter, time: 120000 })
-            //     let webhooks = await reaction.message.channel.fetchWebhooks()
-            //     let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
-            //     let content = reaction.message.content
-            //     user.send(`Texte actuel : \n\n${content}`)
+            if (reaction.emoji.name == '📝') {
+                let webhooks = await reaction.message.channel.fetchWebhooks()
+                let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
+                const filter = msg => results[0].discordid == user.id && msg.channel.type == 'DM'
+                let content = reaction.message.content
+                const embed = new Discord.MessageEmbed()
+                    .setTitle(`Edition d'un message`)
+                    .setDescription(`Pour éditer ton message, écris simplement en dessous de mon message le nouveau contenu que doit arborer le tien !\n\nExpire <t:${Math.floor(new Date().getTime() / 1000) + 120}:R>.`)
+                    .addField(`Contenu actuel`, `\`\`\`${content}\`\`\``)
+                    .setTimestamp()
 
-            //     collector.on('collect', async collected => {
-            //         content = collected.content
-            //         collected.delete()
-            //         collector.stop()
+                reaction.remove()
+                user.send({ embeds: [embed] }).then(async msg => {
+                    const collector = msg.channel.createMessageCollector({ filter, time: 120000 })
+                    collector.on('collect', async collected => {
+                        content = collected.content
+                        collector.stop()
+                        await webhook.editMessage(reaction.message.id, {
+                            content: content,
+                        });
 
-            //         await webhook.editMessage(reaction.message.id, {
-            //             content: content,
-            //         });
-
-            //     })
-            // }
+                        const embed2 = new Discord.MessageEmbed()
+                            .setTitle(`Message édité !`)
+                            .addField(`Ancien contenu`, embed.fields[0].value)
+                            .addField(`Nouveau contenu`, `\`\`\`${content}\`\`\``)
+                            .setTimestamp()
+                        msg.edit({ embeds: [embed2] })
+                    })
+                })
+            }
         })
     },
 };

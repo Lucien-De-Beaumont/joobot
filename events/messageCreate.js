@@ -9,71 +9,72 @@ module.exports = {
   async execute(client, message) {
     if (message.author.bot) return;
 
-    let allResultsForDate = []
-    let imgURL
-    let webhookName
-    let prefix
+    if (message.channel.type == 'GUILD_TEXT') {
+      let allResultsForDate = []
+      let imgURL
+      let webhookName
+      let prefix
 
-    db.query(`SELECT * FROM webhook WHERE discordid=${db.escape(message.author.id)}`, async function (err, results) {
+      db.query(`SELECT * FROM webhook WHERE discordid=${db.escape(message.author.id)}`, async function (err, results) {
 
-      results.forEach(element => {
-        allResultsForDate.push(element.date)
-      })
+        results.forEach(element => {
+          allResultsForDate.push(element.date)
+        })
 
-      for (index in allResultsForDate) {
-        if (message.content.startsWith(results[index].prefix)) {
-          prefix = results[index].prefix;
-          webhookName = results[index].nom;
-          imgURL = results[index].iconURL;
+        for (index in allResultsForDate) {
+          if (message.content.startsWith(results[index].prefix)) {
+            prefix = results[index].prefix;
+            webhookName = results[index].nom;
+            imgURL = results[index].iconURL;
 
+          }
         }
-      }
-      let webhooks = await message.channel.fetchWebhooks()
-      let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
+        let webhooks = await message.channel.fetchWebhooks()
+        let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
 
-      if (message.content.startsWith(prefix)) {
-        if (typeof webhook == 'undefined') {
-          let args = message.content.slice(prefix.length).trim().split(/ +/g);
-          let content = args.slice(0).join(" ").replace(prefix);
-          message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
+        if (message.content.startsWith(prefix)) {
+          if (typeof webhook == 'undefined') {
+            let args = message.content.slice(prefix.length).trim().split(/ +/g);
+            let content = args.slice(0).join(" ").replace(prefix);
+            message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
 
-            wb.send({
+              wb.send({
+                content: content,
+                username: webhookName,
+                avatarURL: imgURL,
+              });
+
+              if (message.attachments.map(i => i)[0]) {
+                wb.send({
+                  content: message.attachments.map(i => i)[0].attachment,
+                  username: webhookName,
+                  avatarURL: imgURL,
+                })
+              };
+            })
+          } else {
+            let args = message.content.slice(prefix.length).trim().split(/ +/g);
+            let content = args.slice(0).join(" ").replace(prefix);
+
+            await webhook.send({
               content: content,
               username: webhookName,
               avatarURL: imgURL,
             });
 
             if (message.attachments.map(i => i)[0]) {
-              wb.send({
+              await webhook.send({
                 content: message.attachments.map(i => i)[0].attachment,
                 username: webhookName,
                 avatarURL: imgURL,
               })
             };
-          })
-        } else {
-          let args = message.content.slice(prefix.length).trim().split(/ +/g);
-          let content = args.slice(0).join(" ").replace(prefix);
-
-          await webhook.send({
-            content: content,
-            username: webhookName,
-            avatarURL: imgURL,
-          });
-
-          if (message.attachments.map(i => i)[0]) {
-            await webhook.send({
-              content: message.attachments.map(i => i)[0].attachment,
-              username: webhookName,
-              avatarURL: imgURL,
-            })
-          };
+          }
+          message.delete()
         }
-        message.delete()
-      }
 
-    })
-
+      })
+    }
     let args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 
     if (message.content.slice(0, config.prefix.length) !== config.prefix) return;

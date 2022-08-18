@@ -1,5 +1,5 @@
 const config = {
-  prefix: 'dev-',
+  prefix: 'i!',
   dev: {
     "Mécano": "1003759145331195957",
   },
