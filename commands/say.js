@@ -31,7 +31,6 @@ module.exports = {
         let snowflake = interaction.options.getString("idmessage")
 
         interaction.reply('Message envoyé !').then(interaction.deleteReply())
-        console.log(interaction.member.displayName)
         if (snowflake === null) {
             try { client.channels.cache.get(channel.id).send(text) } catch (err) { console.log(err) }
         } else {

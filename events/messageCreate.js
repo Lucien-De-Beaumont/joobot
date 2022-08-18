@@ -85,7 +85,6 @@ module.exports = {
     let roles;
     if (cmd) {
       roles = cmd.role;
-
       if (message.member === null) {
         if (cmd) cmd.run(client, message, args);
       } else if (message.member.roles.cache.some(r => roles.includes(r.id)) || message.member.id == '553231950958035004') {

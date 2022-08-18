@@ -3,7 +3,9 @@ const config = require("./config");
 const dotenv = require("dotenv");
 const mongoose = require('mongoose')
 dotenv.config();
-const client = new Client({ intents: 3276799 });
+const client = new Client({
+  intents: 3276799, partials: ['CHANNEL',]
+});
 const Logger = require("./utils/Logger");
 const date = require('date-and-time');
 
