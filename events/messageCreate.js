@@ -38,37 +38,39 @@ module.exports = {
             let content = args.slice(0).join(" ").replace(prefix);
             message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
 
-              wb.send({
-                content: content,
-                username: webhookName,
-                avatarURL: imgURL,
-              });
-
               if (message.attachments.map(i => i)[0]) {
                 wb.send({
-                  content: message.attachments.map(i => i)[0].attachment,
+                  files: [...message.attachments.values()],
                   username: webhookName,
                   avatarURL: imgURL,
                 })
-              };
+              } else {
+                wb.send({
+                  content: content,
+                  username: webhookName,
+                  avatarURL: imgURL,
+                });
+
+              }
             })
           } else {
             let args = message.content.slice(prefix.length).trim().split(/ +/g);
             let content = args.slice(0).join(" ").replace(prefix);
 
-            await webhook.send({
-              content: content,
-              username: webhookName,
-              avatarURL: imgURL,
-            });
-
             if (message.attachments.map(i => i)[0]) {
               await webhook.send({
-                content: message.attachments.map(i => i)[0].attachment,
+                files: [...message.attachments.values()],
                 username: webhookName,
                 avatarURL: imgURL,
               })
-            };
+            } else {
+              await webhook.send({
+                content: content,
+                username: webhookName,
+                avatarURL: imgURL,
+              });
+
+            }
           }
           message.delete()
         }
