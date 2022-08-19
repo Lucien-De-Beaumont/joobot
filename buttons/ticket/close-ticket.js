@@ -9,7 +9,7 @@ module.exports = {
         interaction.deferUpdate()
         const message = await interaction.fetchReply()
         let discordIDmember = (message.embeds[0].author.iconURL.slice(message.embeds[0].author.iconURL.slice(0, message.embeds[0].author.iconURL.lastIndexOf('/')).lastIndexOf('/') + 1, message.embeds[0].author.iconURL.slice(0, message.embeds[0].author.iconURL.lastIndexOf('/')).length))
-        let typeOfTicket = message.embeds[0].title.toString().slice(message.embeds[0].title.toString().indexOf(': ')+2)
+        let typeOfTicket = message.embeds[0].title.toString().slice(message.embeds[0].title.toString().indexOf(': ') + 2)
 
         const transcriptEmbed = new Discord.MessageEmbed()
             .setTitle(`Ticket fermé`)
@@ -30,6 +30,6 @@ module.exports = {
             }
             )
         interaction.channel.delete()
-        client.channels.cache.get('1003761933486391306').send({ embeds: [transcriptEmbed] })
+        client.channels.cache.get(config.channels['transcript-ticket']).send({ embeds: [transcriptEmbed] })
     }
 }  

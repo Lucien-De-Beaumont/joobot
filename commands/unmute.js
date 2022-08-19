@@ -37,7 +37,7 @@ module.exports = {
         }
 
         try {
-            member.roles.remove('874401466104815617')
+            member.roles.remove(config.roles['Mute'])
             interaction.reply({ embeds: [unmuteEmbed] })
         } catch (err) {
             interaction.reply(`Oops!\nIl semblerait que je ne puisse pas rendre la parole à cette personne..\n\n*Causes probables :* \n\`Cette personne a la permission 'ADMINSTRATEUR'\`.\n\`Cette personne est plus élevée que moi dans la liste des membres\`.`)

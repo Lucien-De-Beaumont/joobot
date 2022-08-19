@@ -75,9 +75,9 @@ module.exports = {
                 break;
 
         }
-        client.channels.cache.get('1002182678348582922').messages.fetch({ limit: 1 }).then(messages => {
+        client.channels.cache.get(config.channels['ticket']).messages.fetch({ limit: 1 }).then(messages => {
             let lastMessage = messages.first();
-            client.channels.cache.get(`1002182678348582922`).messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed], components: [ticketMenu] }))
+            client.channels.cache.get(config.channels['ticket']).messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed], components: [ticketMenu] }))
         })
 
         const embed2 = new Discord.MessageEmbed()
@@ -96,7 +96,7 @@ module.exports = {
                     .setStyle('DANGER')
             )
 
-        client.channels.cache.get('1003761934539182181').createChannel(
+        client.channels.cache.get(config.channels['category-ticket']).createChannel(
             `ticket-${interaction.member.displayName}-${Math.round(Math.random() * 100)}`, {
             permissionOverwrites: [
                 {

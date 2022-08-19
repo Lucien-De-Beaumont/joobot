@@ -20,9 +20,9 @@ module.exports = {
         }
 
         embed.setDescription(description)
-        client.channels.cache.get(`1005615949258436648`).messages.fetch({ limit: 1 }).then(messages => {
+        client.channels.cache.get(config.channels['plan-environs']).messages.fetch({ limit: 1 }).then(messages => {
             let lastMessage = messages.first();
-            client.channels.cache.get(`1005615949258436648`).messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed] }))
+            client.channels.cache.get(config.channels['plan-environs']).messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed] }))
         });
 
     },

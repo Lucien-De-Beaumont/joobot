@@ -10,10 +10,10 @@ module.exports = {
     const embed = new Discord.MessageEmbed()
     .setTitle(`Ho ! Un nouveau membre !`)
     .setImage(`${member.guild.iconURL()}`)
-    .setDescription(`Salut !\nBienvenue à toi <@${member.id}>, n’oublie pas de consulter le <#1002176615779926058> et de jeter un œil à tous les salons pour bien comprendre le fonctionnement du serveur !`)
+    .setDescription(`Salut !\nBienvenue à toi <@${member.id}>, n’oublie pas de consulter le <#${config.channels['reglement']}> et de jeter un œil à tous les salons pour bien comprendre le fonctionnement du serveur !`)
     .setTimestamp()
     .setFooter({text: member.guild.memberCount + " personnes sur le serveur"})
 
-    client.channels.cache.get('1002141497560399912').send({embeds: [embed]})
+    client.channels.cache.get(config.channels['arrivee']).send({embeds: [embed]})
   },
 };

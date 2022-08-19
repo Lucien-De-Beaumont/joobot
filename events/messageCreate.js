@@ -8,7 +8,7 @@ module.exports = {
   once: false,
   async execute(client, message) {
     if (message.author.bot) return;
-
+    // console.log(eval('config.guild_' + message.guild.id + '.dev[\'Mécano\']'))
     if (message.channel.type == 'GUILD_TEXT') {
       let allResultsForDate = []
       let imgURL
