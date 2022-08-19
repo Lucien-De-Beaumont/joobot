@@ -6,11 +6,10 @@ const date = require('date-and-time');
 module.exports = {
     name: "runtupper",
     description: "Insère dans la BDD toutes les données dans tupper.json",
-    role: [config.dev['Mécano']],
     hidden: false,
     helpType: "fun",
-    underConstruction: false,
-    async run(client, message) {
+    async runInteraction(client, message) {
+        if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['mecano']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         let rawdata = fs.readFileSync('tupper.json');
         let student = JSON.parse(rawdata);
         let req = ''
@@ -19,7 +18,7 @@ module.exports = {
                 for (element in student[st]) {
                     let name = student[st][element].name.replace("'", "\\'").trim()
                     let prefix = student[st][element].brackets[0].trim()
-                    if(prefix.length == 0){
+                    if (prefix.length == 0) {
                         prefix = student[st][element].brackets[1].trim()
                     }
                     let avatar_url = student[st][element].avatar_url.trim()

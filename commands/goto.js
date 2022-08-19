@@ -5,7 +5,6 @@ const config = require("../config");
 module.exports = {
     name: "goto",
     description: "Changer de zone RP",
-    role: [config["guild"]],
     hidden: false,
     options: [{
         name: "zone",
@@ -25,9 +24,11 @@ module.exports = {
     helpType: "moderation",
 
     runInteraction(client, interaction) {
+        if (typeof (eval('config.guild_' + interaction.guild.id + ".channels['goto-logger']")) != 'string' || typeof eval('config.guild_' + interaction.guild.id + ".zones.categories") == 'undefined') { return }
+
         let member = interaction.guild.members.cache.find(member => member.id === interaction.member.id)
         let chosenChannelFullName
-        let toBeAddedRole = config.zones.roles[`${interaction.options.getString("zone")}`]
+        let toBeAddedRole = eval('config.guild_' + interaction.guild.id + ".zones.roles['"+interaction.options.getString('zone')+"']")
 
         switch (interaction.options.getString("zone")) {
             case 'academy':
@@ -53,12 +54,12 @@ module.exports = {
                 break;
 
         }
-        for (role in config.zones.roles) {
-            member.roles.remove(config.zones.roles[role])
+        for (role in eval('config.guild_' + interaction.guild.id + ".zones.roles")) {
+            member.roles.remove(eval('config.guild_' + interaction.guild.id + ".zones.roles['"+role+"']"))
         }
 
         member.roles.add(toBeAddedRole)
-        member.roles.add(config.zones.roles['Catégorie'])
+        member.roles.add(eval('config.guild_' + interaction.guild.id + ".zones.roles['Catégorie']"))
 
         const embedLogger = new Discord.MessageEmbed()
             .setTitle(`Changement de zone`)
@@ -67,7 +68,7 @@ module.exports = {
             .setTimestamp()
             .setThumbnail(`${interaction.guild.iconURL()}`)
 
-        client.channels.cache.get(`1006227089265008750`).send({ embeds: [embedLogger] })
+        client.channels.cache.get(eval('config.guild_'+interaction.guild.id+'.channels["goto-logger"]')).send({ embeds: [embedLogger] })
         return interaction.reply({ content: `C'est parti ! Tu te diriges maintenant vers ${chosenChannelFullName} !`, ephemeral: true })
     },
 }

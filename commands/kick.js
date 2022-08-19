@@ -4,7 +4,6 @@ const config = require("../config");
 module.exports = {
     name: "kick",
     description: "Expulser un membre",
-    role: [config.moderation['Fondateur'], config.moderation['Administrateur'], config.moderation['Modérateur']],
     hidden: false,
     options: [{
         name: "membre",
@@ -25,6 +24,7 @@ module.exports = {
         let member = interaction.guild.members.cache.find(member => member.id === user.id)
         let kickreason = interaction.options.getString("raison")
 
+        if(!interaction.member.roles.cache.some(r => eval('config.guild_'+interaction.guild.id+".perms['wholeStaff']").includes(r.id))){ return interaction.reply({content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true})}
         const kickEmbed = new Discord.MessageEmbed()
             .setTitle("Expulsion d'un membre")
             .setThumbnail(`${client.user.avatarURL()}`)

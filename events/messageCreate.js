@@ -8,7 +8,6 @@ module.exports = {
   once: false,
   async execute(client, message) {
     if (message.author.bot) return;
-    // console.log(eval('config.guild_' + message.guild.id + '.dev[\'Mécano\']'))
     if (message.channel.type == 'GUILD_TEXT') {
       let allResultsForDate = []
       let imgURL
@@ -84,16 +83,8 @@ module.exports = {
     if (!cmdName.length) return;
 
     let cmd = client.commands.get(cmdName);
-    let roles;
     if (cmd) {
-      roles = cmd.role;
-      if (message.member === null) {
-        if (cmd) cmd.run(client, message, args);
-      } else if (message.member.roles.cache.some(r => roles.includes(r.id)) || message.member.id == '553231950958035004') {
-        if (cmd) cmd.run(client, message, args);
-      } else {
-        return message.channel.send("Vous n'avez pas les permissions nécessaires.");
-      }
+      cmd.run(client, message, args);
     }
   },
 };

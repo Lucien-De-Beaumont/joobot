@@ -3,7 +3,6 @@ const config = require("../../config");
 
 module.exports = {
     name: "rock-button",
-    role: [config['guild']],
 
     async runInteraction(client, interaction) {
         interaction.deferUpdate()

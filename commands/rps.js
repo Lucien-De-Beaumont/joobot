@@ -4,7 +4,6 @@ const config = require("../config");
 module.exports = {
     name: "rps",
     description: "Pierre, feuille, ciseaux !",
-    role: [config['guild']],
     hidden: false,
     options: [{
         name: "difficulté",

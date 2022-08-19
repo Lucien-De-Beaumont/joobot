@@ -4,8 +4,7 @@ const db = require('../utils/connectMYSQL');
 
 module.exports = {
     name: "modify",
-    description: "Modifier l'un de ses personnages RP",
-    role: [config['guild']],
+    description: "Modifier l'un de ses personnages RP", 
     hidden: false,
     options: [{
         name: "prefixe",

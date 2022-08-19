@@ -5,7 +5,6 @@ const date = require('date-and-time');
 
 module.exports = {
     name: "validate-character-button",
-    role: [config.guild],
 
     async runInteraction(client, interaction) {
         interaction.deferUpdate()

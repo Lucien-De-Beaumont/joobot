@@ -4,7 +4,6 @@ const config = require("../config");
 module.exports = {
     name: "say",
     description: "Se mettre dans la peau d'Izu",
-    role: [config.moderation['Fondateur'], config.moderation['Administrateur']],
     hidden: false,
     options: [{
         name: "channel",
@@ -30,6 +29,7 @@ module.exports = {
         let text = interaction.options.getString("texte")
         let snowflake = interaction.options.getString("idmessage")
 
+        if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         interaction.reply('Message envoyé !').then(interaction.deleteReply())
         if (snowflake === null) {
             try { client.channels.cache.get(channel.id).send(text) } catch (err) { console.log(err) }

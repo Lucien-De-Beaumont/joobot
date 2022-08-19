@@ -4,7 +4,6 @@ const config = require("../config");
 module.exports = {
     name: "unmute",
     description: "Rendre la parole à un membre",
-    role: [config.moderation['Fondateur'], config.moderation['Administrateur'], config.moderation['Modérateur']],
     hidden: false,
     options: [{
         name: "membre",
@@ -25,6 +24,7 @@ module.exports = {
         let member = interaction.guild.members.cache.find(member => member.id === user.id)
         let unmuteReason = interaction.options.getString("raison")
 
+        if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         const unmuteEmbed = new Discord.MessageEmbed()
             .setTitle("Don de la parole à un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
@@ -37,7 +37,7 @@ module.exports = {
         }
 
         try {
-            member.roles.remove(config.roles['Mute'])
+            member.roles.remove(eval('config.guild_' + message.guild.id + '.roles[\'Mute\']'))
             interaction.reply({ embeds: [unmuteEmbed] })
         } catch (err) {
             interaction.reply(`Oops!\nIl semblerait que je ne puisse pas rendre la parole à cette personne..\n\n*Causes probables :* \n\`Cette personne a la permission 'ADMINSTRATEUR'\`.\n\`Cette personne est plus élevée que moi dans la liste des membres\`.`)

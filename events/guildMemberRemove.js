@@ -6,7 +6,7 @@ module.exports = {
   name: "guildMemberRemove",
   once: false,
   async execute(client, member) {
-    member.guild
+    if (typeof (eval('config.guild_' + member.guild.id + ".channels['depart']")) != 'string') { return }
     const embed = new Discord.MessageEmbed()
       .setTitle(`Un membre vient de partir 😢`)
       .setImage(`${member.guild.iconURL()}`)
@@ -14,6 +14,6 @@ module.exports = {
       .setTimestamp()
       .setFooter({ text: member.guild.memberCount + ` personnes sur le serveur` })
 
-    client.channels.cache.get(config.channels['depart']).send({ embeds: [embed] })
+    client.channels.cache.get(eval("config.guild_"+member.guild.id+".channels['depart']")).send({ embeds: [embed] })
   },
 };

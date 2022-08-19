@@ -3,7 +3,6 @@ const Discord = require("discord.js");
 
 module.exports = {
     name: "close-ticket",
-    role: [config.moderation['Fondateur'], config.moderation['Administrateur'], config.moderation['Modérateur']],
 
     async runInteraction(client, interaction) {
         interaction.deferUpdate()
@@ -11,6 +10,7 @@ module.exports = {
         let discordIDmember = (message.embeds[0].author.iconURL.slice(message.embeds[0].author.iconURL.slice(0, message.embeds[0].author.iconURL.lastIndexOf('/')).lastIndexOf('/') + 1, message.embeds[0].author.iconURL.slice(0, message.embeds[0].author.iconURL.lastIndexOf('/')).length))
         let typeOfTicket = message.embeds[0].title.toString().slice(message.embeds[0].title.toString().indexOf(': ') + 2)
 
+        if (typeof (eval('config.guild_' + interaction.guild.id + ".channels['transcript-ticket']")) != 'string') { return }
         const transcriptEmbed = new Discord.MessageEmbed()
             .setTitle(`Ticket fermé`)
             .setTimestamp()
@@ -30,6 +30,6 @@ module.exports = {
             }
             )
         interaction.channel.delete()
-        client.channels.cache.get(config.channels['transcript-ticket']).send({ embeds: [transcriptEmbed] })
+        client.channels.cache.get(eval('config.guild_' + message.guild.id + '.channels[\'transcript-ticket\']')).send({ embeds: [transcriptEmbed] })
     }
 }  

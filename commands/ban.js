@@ -4,7 +4,6 @@ const config = require("../config");
 module.exports = {
     name: "ban",
     description: "Bannir un membre",
-    role: [config.moderation['Fondateur'], config.moderation['Administrateur'], config.moderation['Modérateur']],
     hidden: false,
     options: [{
         name: "membre",
@@ -31,6 +30,7 @@ module.exports = {
         let dayDeleteMessages = interaction.options.getNumber("jours")
         let banreason = interaction.options.getString("raison")
 
+        if(!interaction.member.roles.cache.some(r => eval('config.guild_'+interaction.guild.id+".perms['wholeStaff']").includes(r.id))){ return interaction.reply({content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true})}
         if (dayDeleteMessages < 0 || dayDeleteMessages > 7) {
             interaction.reply(`Oops!\nIl semblerait que je ne puisse pas bannir cette personne..\n\n*Causes probables :* \n\`Je ne peux pas supprimer les messages envoyés les ${dayDeleteMessages} derniers jours par cette personne ( ce chiffre doit être compris entre 0 et 7 )\`.`)
         }

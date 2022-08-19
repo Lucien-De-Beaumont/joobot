@@ -5,7 +5,6 @@ const db = require("../utils/connectMYSQL");
 module.exports = {
     name: "avatar",
     description: "Attribuer un avatar à un personnage RP",
-    role: [config.guild],
     hidden: false,
     helpType: "fun",
     both: true,
@@ -22,7 +21,7 @@ module.exports = {
             if (!results[0]) { return interaction.reply(`Aucun de vos personnages n'est enregistré avec le préfixe suivant : ${prefix}`) }
             const embed2 = new Discord.MessageEmbed()
                 .setTitle(`Modification de l'avatar d'un personnage`)
-                .setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
+                .setAuthor({ name: interaction.member.displayName, iconURL: interaction.member.displayAvatarURL() })
                 .setDescription(`Merci d'envoyer l'image qui servira d'avatar pour ${results[0].nom}.\nExpire <t:${Math.floor(new Date().getTime() / 1000) + 60}:R>.`)
             const filter = msg => msg.author.id == interaction.member.id
             const collector = interaction.channel.createMessageCollector({ filter, time: 60000 })
