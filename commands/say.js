@@ -5,6 +5,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "say",
     description: "Se mettre dans la peau d'Izu",
+    dmPermission: false,
     hidden: false,
     options: [{
         name: "channel",

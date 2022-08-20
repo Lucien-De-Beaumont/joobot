@@ -18,7 +18,7 @@ module.exports = {
                 .setColor(`#FF0000`)
                 .setThumbnail(`${message.embeds[0].thumbnail.url}`)
             message.embeds[0].fields.forEach(element => {
-                embed.addField(element.name, element.value, element.inline)
+                embed.addFields({name: element.name, value: element.value, inline: element.inline})
             });
             message.delete()
             interaction.channel.send({ embeds: [embed] })

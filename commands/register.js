@@ -5,6 +5,7 @@ const db = require("../utils/connectMYSQL");
 module.exports = {
     name: "register",
     description: "Créer un nouveau personnage RP",
+    dmPermission: true,
     hidden: false,
     helpType: "fun",
     both: true,
@@ -41,7 +42,7 @@ module.exports = {
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`Validation de création d'un nouveau personnage`)
                     .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
-                    .setDescription(`Merci de vérifier les informations fournies, les seules modifications possibles se restreignent à changer l'avatar de votre personnage.\nSi l'avatar n'apparaît pas dans le message, merci de considérer que celui n'est pas valide.\nEn conséquent, toute autre information est figée définitivement ( quoique modifiable par le <@&${eval('config.guild_' + interaction.guild.id + ".dev['Mécano']")}>, <@553231950958035004> ).`)
+                    .setDescription(`Merci de vérifier les informations fournies, les seules modifications possibles se restreignent à changer l'avatar de votre personnage.\nSi l'avatar n'apparaît pas dans le message, merci de considérer que celui n'est pas valide.\nEn conséquent, toute autre information est figée définitivement ( quoique modifiable par le mécano, <@553231950958035004> ).`)
                     .addFields({
                         name: `Nom du personnage`, value: `${nom}`, inline: true
                     }, {

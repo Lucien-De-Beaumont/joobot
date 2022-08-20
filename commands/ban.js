@@ -5,6 +5,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "ban",
     description: "Bannir un membre",
+    dmPermission: false,
     hidden: false,
     options: [{
         name: "membre",
@@ -31,7 +32,7 @@ module.exports = {
         let dayDeleteMessages = interaction.options.getNumber("jours")
         let banreason = interaction.options.getString("raison")
 
-        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
+        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err) }
 
         if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         if (dayDeleteMessages < 0 || dayDeleteMessages > 7) {
@@ -41,8 +42,8 @@ module.exports = {
             .setTitle("Bannissement d'un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
             .setAuthor({ name: `Banni par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
-            .addField("Membre banni", `<@${member.id}>`, false)
-            .addField("Raison", `${banreason}`, false)
+            .addFields({ name: "Membre banni", value: `<@${member.id}>`, inline: false })
+            .addFields({ name: "Raison", value: `${banreason}`, inline: false })
             .setColor('#ff0000')
             .setTimestamp()
 

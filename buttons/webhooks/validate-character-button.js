@@ -18,7 +18,7 @@ module.exports = {
             .setTimestamp()
             .setColor(`#00FF00`)
         message.embeds[0].fields.forEach(element => {
-            embed.addField(element.name, element.value, element.inline)
+            embed.addFields({name: element.name, value: element.value, inline: element.inline})
         });
         message.delete()
         interaction.channel.send({ embeds: [embed] })
@@ -33,7 +33,7 @@ module.exports = {
             .setTimestamp()
             .setColor(`#00FF00`)
         message.embeds[0].fields.forEach(element => {
-            embed.addField(element.name, element.value, element.inline)
+            embed.addFields({name: element.name, value: element.value, inline: element.inline})
         });
         message.delete()
         interaction.channel.send({ embeds: [embed] })

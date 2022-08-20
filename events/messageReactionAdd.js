@@ -20,7 +20,7 @@ module.exports = {
                 const embed = new Discord.MessageEmbed()
                     .setTitle(`Edition d'un message`)
                     .setDescription(`Pour éditer ton message, écris simplement en dessous de mon message le nouveau contenu que doit arborer le tien !\n\nExpire <t:${Math.floor(new Date().getTime() / 1000) + 120}:R>.`)
-                    .addField(`Contenu actuel`, `\`\`\`${content}\`\`\``)
+                    .addFields({ name: `Contenu actuel`, value: `\`\`\`${content}\`\`\`` })
                     .setTimestamp()
 
                 reaction.remove()
@@ -35,8 +35,10 @@ module.exports = {
 
                         const embed2 = new Discord.MessageEmbed()
                             .setTitle(`Message édité !`)
-                            .addField(`Ancien contenu`, embed.fields[0].value)
-                            .addField(`Nouveau contenu`, `\`\`\`${content}\`\`\``)
+                            .addFields(
+                                { name: `Ancien contenu`, value: embed.fields[0].value },
+                                { name: `Nouveau contenu`, value: `\`\`\`${content}\`\`\`` },
+                            )
                             .setTimestamp()
                         msg.edit({ embeds: [embed2] })
                     })

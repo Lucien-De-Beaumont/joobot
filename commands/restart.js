@@ -4,6 +4,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "restart",
     description: "Actualisation des commandes",
+    dmPermission: false,
     hidden: true,
     helpType: "dev",
 

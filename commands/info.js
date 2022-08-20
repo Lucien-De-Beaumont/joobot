@@ -6,6 +6,7 @@ const date = require('date-and-time');
 module.exports = {
     name: "info",
     description: "Trouver les informations sur un personnage RP",
+    dmPermission: true,
     hidden: false,
     options: [{
         name: "prefixe",
@@ -25,10 +26,10 @@ module.exports = {
                 .setTitle("Informations sur " + results0[0].nom)
                 .setThumbnail(`${results0[0].iconURL}`)
                 .setAuthor({ name: `Demandé par ${interaction.user.username}`, iconURL: `${interaction.user.displayAvatarURL()}` })
-                .addFields({ title: "Nom du personnage", value: `${results0[0].nom}`, inline: false },
-                    { title: "Propriétaire", value: `<@${results0[0].discordid}>`, inline: false },
-                    { title: `Préfixe`, value: results0[0].prefix, inline: false },
-                    { title: "Date de création", value: `<t:${Math.floor(new Date(results0[0].date).getTime() / 1000)}:R>, le <t:${Math.floor(new Date(results0[0].date).getTime() / 1000)}:f>`, inline: false })
+                .addFields({ name: "Nom du personnage", value: `${results0[0].nom}`, inline: false },
+                    { name: "Propriétaire", value: `<@${results0[0].discordid}>`, inline: false },
+                    { name: `Préfixe`, value: results0[0].prefix, inline: false },
+                    { name: "Date de création", value: `<t:${Math.floor(new Date(results0[0].date).getTime() / 1000)}:R>, le <t:${Math.floor(new Date(results0[0].date).getTime() / 1000)}:f>`, inline: false })
                 .setColor('#FFFF00')
                 .setTimestamp()
 

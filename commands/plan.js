@@ -5,6 +5,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "plan",
     description: "Envoie le plan des salons",
+    dmPermission: false,
     hidden: false,
     helpType: "moderation",
 

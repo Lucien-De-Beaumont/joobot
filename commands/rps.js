@@ -4,6 +4,7 @@ const config = require("../config");
 module.exports = {
     name: "rps",
     description: "Pierre, feuille, ciseaux !",
+    dmPermission: false,
     hidden: false,
     options: [{
         name: "difficulté",
@@ -46,9 +47,11 @@ module.exports = {
             .setTitle('Partie de Pierre-Feuille-Ciseaux')
             .setTimestamp()
             .setThumbnail(`${client.user.displayAvatarURL()}`)
-            .addField('Votre choix', '```❓```', false)
-            .addField('Le choix d\'Izu', '```❓```', false)
-            .addField('Difficulté', `\`\`\`${equiDifficultyText[difficulty]}\`\`\``, false)
+            .addFields(
+                { name: 'Votre choix', value: '```❓```', inline: false },
+                { name: 'Le choix d\'Izu', value: '```❓```', inline: false },
+                { name: 'Difficulté', value: '\`\`\`${equiDifficultyText[difficulty]}\`\`\`', inline: false }
+            )
 
         interaction.reply({ embeds: [embed], components: [buttons] })
     },

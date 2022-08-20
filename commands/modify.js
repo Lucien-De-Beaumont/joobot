@@ -5,6 +5,7 @@ const db = require('../utils/connectMYSQL');
 module.exports = {
     name: "modify",
     description: "Modifier l'un de ses personnages RP",
+    dmPermission: true,
     hidden: false,
     options: [{
         name: "prefixe",
@@ -44,9 +45,8 @@ module.exports = {
                     .setTitle(`Mise à jour de ${results0[0].nom} effectuée`)
                     .setTimestamp()
                     .setThumbnail(`${results0[0].iconURL}`)
-                    .addFields({ title: `Ancien ${option}`, value: `${eval('results0[0].' + option)}`, inline: false },
-                        { title: `Nouveau ${option}`, value: `${newParameter}`, inline: false })
-
+                    .addFields({ name: `Ancien ${option}`, value: `${eval('results0[0].' + option)}`, inline: false },
+                        { name: `Nouveau ${option}`, value: `${newParameter}`, inline: false })
                 interaction.reply({ embeds: [embed] })
             });
         });

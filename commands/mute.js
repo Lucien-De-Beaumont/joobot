@@ -5,6 +5,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "mute",
     description: "Réduire au silence un membre",
+    dmPermission: false,
     hidden: false,
     options: [{
         name: "membre",
@@ -25,15 +26,15 @@ module.exports = {
         let member = interaction.guild.members.cache.find(member => member.id === user.id)
         let muteReason = interaction.options.getString("raison")
 
-        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
-        if(!interaction.member.roles.cache.some(r => eval('config.guild_'+interaction.guild.id+".perms['wholeStaff']").includes(r.id))){ return interaction.reply({content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true})}
-        
+        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err) }
+        if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
+
         const muteEmbed = new Discord.MessageEmbed()
             .setTitle("Réduction au silence d'un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
             .setAuthor({ name: `Rendu muet par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
-            .addField("Membre rendu muet", `<@${member.id}>`, false)
-            .addField("Raison", `${muteReason}`, false)
+            .addFields({ name: "Membre rendu muet", value: `<@${member.id}>`, inline: false })
+            .addFields({ name: "Raison", value: `${muteReason}`, inline: false })
             .setColor('#ff0000')
             .setTimestamp()
 

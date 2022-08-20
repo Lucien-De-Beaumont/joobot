@@ -5,6 +5,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "goto",
     description: "Changer de zone RP",
+    dmPermission: false,
     hidden: false,
     options: [{
         name: "zone",
@@ -24,7 +25,7 @@ module.exports = {
     helpType: "moderation",
 
     runInteraction(client, interaction) {
-        try { eval('config.guild_' + interaction.guild.id + ".channels['goto-logger']"); eval('config.guild_' + interaction.guild.id + ".zones.categories") } catch (err) { return Logger.debug('fatal error occured:' + err)}
+        try { eval('config.guild_' + interaction.guild.id + ".channels['goto-logger']"); eval('config.guild_' + interaction.guild.id + ".zones.categories") } catch (err) { return Logger.debug('fatal error occured:' + err) }
 
         let member = interaction.guild.members.cache.find(member => member.id === interaction.member.id)
         let chosenChannelFullName
@@ -64,7 +65,7 @@ module.exports = {
         const embedLogger = new Discord.MessageEmbed()
             .setTitle(`Changement de zone`)
             .setAuthor({ name: member.displayName, iconURL: member.displayAvatarURL() })
-            .addField(`Nouvelle zone`, `${member.displayName} est parti vers ${chosenChannelFullName}`)
+            .addFields({ name: `Nouvelle zone`, value: `${member.displayName} est parti vers ${chosenChannelFullName}` })
             .setTimestamp()
             .setThumbnail(`${interaction.guild.iconURL()}`)
 

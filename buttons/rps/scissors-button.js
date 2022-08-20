@@ -23,9 +23,9 @@ module.exports = {
             .setThumbnail(`${client.user.displayAvatarURL()}`)
 
         if (difficulty == "\`\`\`🟢 | Facile\`\`\`") {
-            embed.addField('Votre choix', `\`\`\`✂️ | Ciseaux\`\`\``, false)
-            embed.addField('Le choix d\'Izu', `\`\`\`📄 | Feuille\`\`\``, false)
-            embed.addField('Résultat', `\`\`\`🟢 | Vous avez gagné !\`\`\``, false)
+            embed.addFields({ name: 'Votre choix', value: `\`\`\`✂️ | Ciseaux\`\`\``, inline: false })
+            embed.addFields({ name: 'Le choix d\'Izu', value: `\`\`\`📄 | Feuille\`\`\``, inline: false })
+            embed.addFields({ name: 'Résultat', value: `\`\`\`🟢 | Vous avez gagné !\`\`\``, inline: false })
             embed.setColor('#00FF00')
         } else if (difficulty == "\`\`\`⚪ | Intermédiaire\`\`\`") {
             let randomizer = Math.ceil(Math.random() * choices.length)
@@ -44,9 +44,9 @@ module.exports = {
             }
 
 
-            embed.addField('Votre choix', `\`\`\`✂️ | Ciseaux\`\`\``, false)
-            embed.addField('Le choix d\'Izu', `\`\`\`${equiChoiceText[choice]}\`\`\``, false)
-            embed.addField('Résultat', `\`\`\`${result}\`\`\``, false)
+            embed.addFields({ name: 'Votre choix', value: `\`\`\`✂️ | Ciseaux\`\`\``, inline: false })
+            embed.addFields({ name: 'Le choix d\'Izu', value: `\`\`\`${equiChoiceText[choice]}\`\`\``, inline: false })
+            embed.addFields({ name: 'Résultat', value: `\`\`\`${result}\`\`\``, inline: false })
             if (choice == "pierre") {
                 embed.setColor('#FF0000')
             }
@@ -54,9 +54,9 @@ module.exports = {
                 embed.setColor('#00FF00')
             }
         } else if (difficulty == "\`\`\`🔴 | Expert\`\`\`") {
-            embed.addField('Votre choix', `\`\`\`✂️ | Ciseaux\`\`\``, false)
-            embed.addField('Le choix d\'Izu', `\`\`\`🪨 | Pierre\`\`\``, false)
-            embed.addField('Résultat', `\`\`\`🔴 | Vous avez perdu !\`\`\``, false)
+            embed.addFields({ name: 'Votre choix', value: `\`\`\`✂️ | Ciseaux\`\`\``, inline: false })
+            embed.addFields({ name: 'Le choix d\'Izu', value: `\`\`\`🪨 | Pierre\`\`\``, inline: false })
+            embed.addFields({ name: 'Résultat', value: `\`\`\`🔴 | Vous avez perdu !\`\`\``, inline: false })
             embed.setColor('#FF0000')
         }
         message.edit({ embeds: [embed], components: [] })

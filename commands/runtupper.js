@@ -7,6 +7,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "runtupper",
     description: "Insère dans la BDD toutes les données dans tupper.json",
+    dmPermission: false,
     hidden: false,
     helpType: "fun",
     async runInteraction(client, interaction) {

@@ -5,6 +5,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "kick",
     description: "Expulser un membre",
+    dmPermission: false,
     hidden: false,
     options: [{
         name: "membre",
@@ -32,8 +33,8 @@ module.exports = {
             .setTitle("Expulsion d'un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
             .setAuthor({ name: `Expulsé par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
-            .addField("Membre expulsé", `<@${member.id}>`, false)
-            .addField("Raison", `${kickreason}`, false)
+            .addFields({ name: "Membre expulsé", value: `<@${member.id}>`, inline: false })
+            .addFields({ name: "Raison", value: `${kickreason}`, inline: false })
             .setColor('#ff0000')
             .setTimestamp()
 

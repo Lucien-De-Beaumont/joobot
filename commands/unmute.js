@@ -5,6 +5,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "unmute",
     description: "Rendre la parole à un membre",
+    dmPermission: false,
     hidden: false,
     options: [{
         name: "membre",
@@ -25,17 +26,17 @@ module.exports = {
         let member = interaction.guild.members.cache.find(member => member.id === user.id)
         let unmuteReason = interaction.options.getString("raison")
 
-        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
+        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err) }
         if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         const unmuteEmbed = new Discord.MessageEmbed()
             .setTitle("Don de la parole à un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
             .setAuthor({ name: `Parole rendue par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
-            .addField("Membre à qui la parole a été rendue", `<@${member.id}>`, false)
+            .addFields({ name: "Membre à qui la parole a été rendue", value: `<@${member.id}>`, inline: false })
             .setColor('#ff0000')
             .setTimestamp()
         if (unmuteReason !== null) {
-            unmuteEmbed.addField("Raison", `${unmuteReason}`, false)
+            unmuteEmbed.addFields({ name: "Raison", value: `${unmuteReason}`, inline: false })
         }
 
         try {

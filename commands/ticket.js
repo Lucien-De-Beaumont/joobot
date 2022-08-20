@@ -5,6 +5,7 @@ const Logger = require("../utils/Logger");
 module.exports = {
     name: "ticket",
     description: "Envoie l'embed de création de ticket",
+    dmPermission: false,
     hidden: false,
     helpType: "fun",
 
