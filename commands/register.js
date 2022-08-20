@@ -24,7 +24,6 @@ module.exports = {
         let nom = interaction.options.getString('nom')
         let prefix = interaction.options.getString('prefixe')
 
-
         db.query(`SELECT * FROM webhook WHERE discordid='${interaction.member.id}' AND prefix='${prefix}'`, function (err, results) {
             if (!(results && results.length)) {
 

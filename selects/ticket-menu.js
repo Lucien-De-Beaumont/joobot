@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 const config = require('../config')
+const Logger = require("../utils/Logger");
 
 module.exports = {
     name: 'ticket-menu',
     async runInteraction(client, interaction) {
 
+        try { eval('config.guild_' + interaction.guild.id + ".channels['category-ticket']"); eval('config.guild_' + interaction.guild.id + ".channels['ticket']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
         const embed = new Discord.MessageEmbed()
             .setTitle(`Envoyer un ticket à l'équipe de modération`)
             .setDescription(`Utilisez le bouton ci-dessous pour envoyer un ticket à notre équipe de modération, qui l'étudiera dans les plus brefs délais !`)

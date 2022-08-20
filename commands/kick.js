@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const config = require("../config");
+const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "kick",
@@ -24,7 +25,9 @@ module.exports = {
         let member = interaction.guild.members.cache.find(member => member.id === user.id)
         let kickreason = interaction.options.getString("raison")
 
+        try { eval('config.guild_'+interaction.guild.id+".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
         if(!interaction.member.roles.cache.some(r => eval('config.guild_'+interaction.guild.id+".perms['wholeStaff']").includes(r.id))){ return interaction.reply({content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true})}
+        
         const kickEmbed = new Discord.MessageEmbed()
             .setTitle("Expulsion d'un membre")
             .setThumbnail(`${client.user.avatarURL()}`)

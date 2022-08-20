@@ -2,6 +2,7 @@ const fs = require('fs');
 const config = require('../config')
 const db = require("../utils/connectMYSQL");
 const date = require('date-and-time');
+const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "runtupper",
@@ -9,6 +10,7 @@ module.exports = {
     hidden: false,
     helpType: "fun",
     async runInteraction(client, message) {
+        try { eval('config.guild_' + interaction.guild.id + ".perms['mecano']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
         if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['mecano']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         let rawdata = fs.readFileSync('tupper.json');
         let student = JSON.parse(rawdata);

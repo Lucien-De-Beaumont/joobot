@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const config = require("../config");
+const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "say",
@@ -28,6 +29,8 @@ module.exports = {
         let channel = interaction.options.getChannel("channel")
         let text = interaction.options.getString("texte")
         let snowflake = interaction.options.getString("idmessage")
+
+        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
 
         if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         interaction.reply('Message envoyé !').then(interaction.deleteReply())

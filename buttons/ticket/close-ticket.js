@@ -1,5 +1,6 @@
 const config = require("../../config");
 const Discord = require("discord.js");
+const Logger = require("../../utils/Logger");
 
 module.exports = {
     name: "close-ticket",
@@ -10,7 +11,7 @@ module.exports = {
         let discordIDmember = (message.embeds[0].author.iconURL.slice(message.embeds[0].author.iconURL.slice(0, message.embeds[0].author.iconURL.lastIndexOf('/')).lastIndexOf('/') + 1, message.embeds[0].author.iconURL.slice(0, message.embeds[0].author.iconURL.lastIndexOf('/')).length))
         let typeOfTicket = message.embeds[0].title.toString().slice(message.embeds[0].title.toString().indexOf(': ') + 2)
 
-        if (typeof (eval('config.guild_' + interaction.guild.id + ".channels['transcript-ticket']")) != 'string') { return }
+        try { eval('config.guild_' + interaction.guild.id + ".channels['transcript-ticket']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
         const transcriptEmbed = new Discord.MessageEmbed()
             .setTitle(`Ticket fermé`)
             .setTimestamp()

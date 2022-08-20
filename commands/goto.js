@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
-const { guild } = require("../config");
 const config = require("../config");
+const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "goto",
@@ -24,11 +24,11 @@ module.exports = {
     helpType: "moderation",
 
     runInteraction(client, interaction) {
-        if (typeof (eval('config.guild_' + interaction.guild.id + ".channels['goto-logger']")) != 'string' || typeof eval('config.guild_' + interaction.guild.id + ".zones.categories") == 'undefined') { return }
+        try { eval('config.guild_' + interaction.guild.id + ".channels['goto-logger']"); eval('config.guild_' + interaction.guild.id + ".zones.categories") } catch (err) { return Logger.debug('fatal error occured:' + err)}
 
         let member = interaction.guild.members.cache.find(member => member.id === interaction.member.id)
         let chosenChannelFullName
-        let toBeAddedRole = eval('config.guild_' + interaction.guild.id + ".zones.roles['"+interaction.options.getString('zone')+"']")
+        let toBeAddedRole = eval('config.guild_' + interaction.guild.id + ".zones.roles['" + interaction.options.getString('zone') + "']")
 
         switch (interaction.options.getString("zone")) {
             case 'academy':
@@ -55,7 +55,7 @@ module.exports = {
 
         }
         for (role in eval('config.guild_' + interaction.guild.id + ".zones.roles")) {
-            member.roles.remove(eval('config.guild_' + interaction.guild.id + ".zones.roles['"+role+"']"))
+            member.roles.remove(eval('config.guild_' + interaction.guild.id + ".zones.roles['" + role + "']"))
         }
 
         member.roles.add(toBeAddedRole)
@@ -68,7 +68,7 @@ module.exports = {
             .setTimestamp()
             .setThumbnail(`${interaction.guild.iconURL()}`)
 
-        client.channels.cache.get(eval('config.guild_'+interaction.guild.id+'.channels["goto-logger"]')).send({ embeds: [embedLogger] })
+        client.channels.cache.get(eval('config.guild_' + interaction.guild.id + '.channels["goto-logger"]')).send({ embeds: [embedLogger] })
         return interaction.reply({ content: `C'est parti ! Tu te diriges maintenant vers ${chosenChannelFullName} !`, ephemeral: true })
     },
 }

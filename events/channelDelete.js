@@ -1,11 +1,12 @@
 const Discord = require("discord.js");
 const config = require("../config");
+const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "channelDelete",
     once: false,
     async execute(client, channel) {
-        if (typeof (eval('config.guild_' + channel.guild.id + ".channels['plan-environs']")) != 'string' || typeof eval('config.guild_' + channel.guild.id + ".zones.categories") == 'undefined') { return }
+        try { eval('config.guild_' + channel.guild.id + ".channels['plan-environs']"); eval('config.guild_' + channel.guild.id + ".zones.categories") } catch (err) { return Logger.debug('fatal error occured:' + err)}
         const embed = new Discord.MessageEmbed()
             .setTitle(`Plan des environs`)
             .setTimestamp()

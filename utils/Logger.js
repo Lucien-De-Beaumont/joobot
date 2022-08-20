@@ -24,8 +24,8 @@ function event(content) {
 function client(content) {
   write(content, "black", "bgBlue", "CLIENT", false);
 }
-function server(content) {
-  write(content, "black", "bgBlue", "SERVER", false);
+function debug(content) {
+  write(content, "black", "bgRedBright", "DEBUG", false);
 }
 
 function write(content, tagColor, bgTagColor, tag, error = false) {
@@ -41,4 +41,4 @@ function write(content, tagColor, bgTagColor, tag, error = false) {
   stream.write(item);
 }
 
-module.exports = { error, warn, command, event, buttons, message, client, server };
+module.exports = { error, warn, command, event, buttons, message, client, debug };
