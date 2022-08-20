@@ -10,7 +10,7 @@ module.exports = {
         const message = await interaction.fetchReply()
 
         if (message.embeds[0].description.includes('<@&')) {
-            if (interaction.member.id != message.embeds[0].fields[3].value) { return interaction.reply({ content: `Vous ne pouvez pas réagir à ce bouton !`, ephemeral: true }) }
+            if (interaction.user.id != message.embeds[0].fields[3].value) { return interaction.reply({ content: `Vous ne pouvez pas réagir à ce bouton !`, ephemeral: true }) }
 
             const embed = new Discord.MessageEmbed()
                 .setTitle(`${message.embeds[0].title}`)

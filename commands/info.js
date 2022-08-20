@@ -24,11 +24,11 @@ module.exports = {
             const infoEmbed = new Discord.MessageEmbed()
                 .setTitle("Informations sur " + results0[0].nom)
                 .setThumbnail(`${results0[0].iconURL}`)
-                .setAuthor({ name: `Demandé par ${interaction.member.displayName}`, iconURL: `${interaction.member.displayAvatarURL()}` })
-                .addField("Nom du personnage", `${results0[0].nom}`, false)
-                .addField("Propriétaire", `<@${results0[0].discordid}>`, false)
-                .addField(`Préfixe`, results0[0].prefix, false)
-                .addField("Date de création", `<t:${Math.floor(new Date(results0[0].date).getTime() / 1000)}:R>, le <t:${Math.floor(new Date(results0[0].date).getTime() / 1000)}:f>`, false)
+                .setAuthor({ name: `Demandé par ${interaction.user.username}`, iconURL: `${interaction.user.displayAvatarURL()}` })
+                .addFields({ title: "Nom du personnage", value: `${results0[0].nom}`, inline: false },
+                    { title: "Propriétaire", value: `<@${results0[0].discordid}>`, inline: false },
+                    { title: `Préfixe`, value: results0[0].prefix, inline: false },
+                    { title: "Date de création", value: `<t:${Math.floor(new Date(results0[0].date).getTime() / 1000)}:R>, le <t:${Math.floor(new Date(results0[0].date).getTime() / 1000)}:f>`, inline: false })
                 .setColor('#FFFF00')
                 .setTimestamp()
 

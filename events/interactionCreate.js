@@ -5,6 +5,8 @@ module.exports = {
     if (interaction.isCommand() || interaction.isContextMenu()) {
       const cmd = client.slashCommands.get(interaction.commandName);
       if (!cmd) return interaction.reply("Cette commande n'existe pas !");
+      let DMCommands = ['avatar', 'delete', 'info', 'modify', 'register']
+      if (DMCommands.indexOf(cmd.name) == -1 && interaction.channel.type == 'DM') { return interaction.reply(`Impossible d'utiliser cette commande ici !`) }
       cmd.runInteraction(client, interaction);
     }
     if (interaction.isButton()) {
