@@ -37,7 +37,14 @@ module.exports = {
             let content = args.slice(0).join(" ").replace(prefix);
             message.channel.createWebhook(`${message.channel.name}`, { avatar: client.user.displayAvatarURL() }).then(wb => {
 
-              if (message.attachments.map(i => i)[0]) {
+              if (message.attachments.map(i => i)[0] && content.length) {
+                wb.send({
+                  content: content,
+                  files: [...message.attachments.values()],
+                  username: webhookName,
+                  avatarURL: imgURL,
+                })
+              } else if (message.attachments.map(i => i)[0]) {
                 wb.send({
                   files: [...message.attachments.values()],
                   username: webhookName,
@@ -49,14 +56,20 @@ module.exports = {
                   username: webhookName,
                   avatarURL: imgURL,
                 });
-
               }
             })
           } else {
             let args = message.content.slice(prefix.length).trim().split(/ +/g);
             let content = args.slice(0).join(" ").replace(prefix);
 
-            if (message.attachments.map(i => i)[0]) {
+            if (message.attachments.map(i => i)[0] && content.length) {
+              await webhook.send({
+                content: content,
+                files: [...message.attachments.values()],
+                username: webhookName,
+                avatarURL: imgURL,
+              })
+            } else if (message.attachments.map(i => i)[0]) {
               await webhook.send({
                 files: [...message.attachments.values()],
                 username: webhookName,
@@ -68,7 +81,6 @@ module.exports = {
                 username: webhookName,
                 avatarURL: imgURL,
               });
-
             }
           }
           message.delete()
