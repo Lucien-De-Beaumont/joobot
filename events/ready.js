@@ -13,8 +13,5 @@ module.exports = {
 
         // client.application.commands.set([]);
         client.application.commands.set(client.slashCommands.map(cmd => cmd));
-
-        // guild.commands.set([]);
-        // const guild = client.guilds.cache.get("1002135735241023548");
     },
 };
