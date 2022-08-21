@@ -34,21 +34,18 @@ module.exports = {
         let option = interaction.options.getString("option")
         let newParameter = interaction.options.getString("donnee")
 
-        db.query(`SELECT * FROM webhook WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`, function (err0, results0) {
-            if (!(results0.length && results0)) return interaction.reply(`Vous n'avez pas de personnage avec le préfixe suivant : \`${prefix}\``)
-            if (results0[0].prefix == newParameter) {
-                return interaction.reply(`Vous avez déjà un personnage avec le préfixe suivant : \`${prefix}\``)
-            }
-            db.query(`UPDATE webhook SET ${db.escape(option).slice(1, db.escape(option).length - 1)} = ${db.escape(newParameter)} WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`, function (err1, results1) {
-                if (err1) return console.log(err1)
-                const embed = new Discord.MessageEmbed()
-                    .setTitle(`Mise à jour de ${results0[0].nom} effectuée`)
-                    .setTimestamp()
-                    .setThumbnail(`${results0[0].iconURL}`)
-                    .addFields({ name: `Ancien ${option}`, value: `${eval('results0[0].' + option)}`, inline: false },
-                        { name: `Nouveau ${option}`, value: `${newParameter}`, inline: false })
-                interaction.reply({ embeds: [embed] })
-            });
-        });
+        const [results0] = await db.query(`SELECT * FROM webhook WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
+        if (!(results0.length && results0)) return interaction.reply(`Vous n'avez pas de personnage avec le préfixe suivant : \`${prefix}\``)
+        if (results0[0].prefix == newParameter) {
+            return interaction.reply(`Vous avez déjà un personnage avec le préfixe suivant : \`${prefix}\``)
+        }
+        db.query(`UPDATE webhook SET ${db.escape(option).slice(1, db.escape(option).length - 1)} = ${db.escape(newParameter)} WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`Mise à jour de ${results0[0].nom} effectuée`)
+            .setTimestamp()
+            .setThumbnail(`${results0[0].iconURL}`)
+            .addFields({ name: `Ancien ${option}`, value: `${eval('results0[0].' + option)}`, inline: false },
+                { name: `Nouveau ${option}`, value: `${newParameter}`, inline: false })
+        interaction.reply({ embeds: [embed] })
     },
 }

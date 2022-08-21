@@ -9,18 +9,18 @@ module.exports = {
     async runInteraction(client, interaction) {
         interaction.deferUpdate()
         const message = await interaction.fetchReply()
-            db.query(`DELETE FROM webhook WHERE discordid = ${db.escape(message.embeds[0].fields[2].value)} AND prefix=${db.escape(message.embeds[0].fields[1].value)}`);
-            if (interaction.user.id != message.embeds[0].fields[2].value) { return interaction.reply({ content: `Vous ne pouvez pas réagir à ce bouton !`, ephemeral: true }) }
-            const embed = new Discord.MessageEmbed()
-                .setTitle(`${message.embeds[0].title}`)
-                .setDescription(`Personnage supprimé !`)
-                .setTimestamp()
-                .setColor(`#FF0000`)
-                .setThumbnail(`${message.embeds[0].thumbnail.url}`)
-            message.embeds[0].fields.forEach(element => {
-                embed.addFields({name: element.name, value: element.value, inline: element.inline})
-            });
-            message.delete()
-            interaction.channel.send({ embeds: [embed] })
+        await db.query(`DELETE FROM webhook WHERE discordid = ${db.escape(message.embeds[0].fields[2].value)} AND prefix=${db.escape(message.embeds[0].fields[1].value)}`);
+        if (interaction.user.id != message.embeds[0].fields[2].value) { return interaction.reply({ content: `Vous ne pouvez pas réagir à ce bouton !`, ephemeral: true }) }
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`${message.embeds[0].title}`)
+            .setDescription(`Personnage supprimé !`)
+            .setTimestamp()
+            .setColor(`#FF0000`)
+            .setThumbnail(`${message.embeds[0].thumbnail.url}`)
+        message.embeds[0].fields.forEach(element => {
+            embed.addFields({ name: element.name, value: element.value, inline: element.inline })
+        });
+        message.delete()
+        interaction.channel.send({ embeds: [embed] })
     }
 }  
