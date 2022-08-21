@@ -32,7 +32,7 @@ module.exports = {
 
       if (message.content.startsWith(prefix)) {
         let args = message.content.slice(prefix.length).trim().split(/ +/g);
-        let content = args.slice(0).join(" ").replace(prefix);
+        let content = args.slice(0).join(" ").replace(/prefix/i);
         if (message.reference !== null) {
           msg = await client.channels.cache.get(message.channel.id).messages.fetch(message.reference.messageId)
           if (!(msg.content.includes('> ') && msg.content.includes('Réponse à') && msg.content.includes('\[Message initial\]\('))) {
