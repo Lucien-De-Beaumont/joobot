@@ -11,11 +11,11 @@ module.exports = {
         Logger.client('Je suis ON!')
         // console.log(client.slashCommands.map(cmd => cmd))
 
-        // client.guilds.cache.get('1002135735241023548').commands.set([]);
-        client.guilds.cache.get('1002135735241023548').commands.set(client.slashCommands.map(cmd => cmd));
+        client.guilds.cache.get('1002135735241023548').commands.set([]);
+        // client.guilds.cache.get('1002135735241023548').commands.set(client.slashCommands.map(cmd => cmd));
 
-        client.application.commands.set([]);
-        // client.application.commands.set(client.slashCommands.map(cmd => cmd));
+        // client.application.commands.set([]);
+        client.application.commands.set(client.slashCommands.map(cmd => cmd));
 
     },
 };
