@@ -25,9 +25,15 @@ module.exports = {
         let nom = interaction.options.getString('nom')
         let prefix = interaction.options.getString('prefixe')
 
-        const [results] = await db.query(`SELECT * FROM webhook WHERE discordid='${interaction.user.id}' AND prefix='${prefix}'`)
-        if (!(results && results.length)) {
+        const [results] = await db.query(`SELECT * FROM webhook WHERE discordid='${interaction.user.id}' AND (prefix=${db.escape(prefix)} OR nom = ${db.escape(nom)}'`)
 
+        if (results[0].prefix == prefix) {
+            interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce préfixe : \`${prefix}\`` })
+        } else if (results[0].nom == nom) {
+            interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce nom : \`${nom}\`` })
+        } else if (results[0].prefix == prefix && results[0].nom == nom) {
+            interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce préfixe et ce nom : \`${prefix}\` -- \`${nom}\`` })
+        } else {
             const button = new Discord.MessageActionRow()
                 .addComponents(
                     new Discord.MessageButton()
@@ -57,8 +63,6 @@ module.exports = {
                 .setTimestamp()
 
             interaction.reply({ embeds: [embed], components: [button] })
-        } else {
-            interaction.reply({ content: `Vous avez déjà un personnage enregistré avec le préfixe \`${prefix}\` !` })
         }
     },
 }

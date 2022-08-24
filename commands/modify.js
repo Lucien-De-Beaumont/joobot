@@ -39,6 +39,9 @@ module.exports = {
         if (results0[0].prefix == newParameter) {
             return interaction.reply(`Vous avez déjà un personnage avec le préfixe suivant : \`${prefix}\``)
         }
+        if (results0[0].nom == newParameter) {
+            return interaction.reply(`Vous avez déjà un personnage avec le nom suivant : \`${prefix}\``)
+        }
         db.query(`UPDATE webhook SET ${db.escape(option).slice(1, db.escape(option).length - 1)} = ${db.escape(newParameter)} WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
         const embed = new Discord.MessageEmbed()
             .setTitle(`Mise à jour de ${results0[0].nom} effectuée`)

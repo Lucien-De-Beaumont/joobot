@@ -50,8 +50,8 @@ module.exports = {
             case 'ville':
                 chosenChannelFullName = "la ville"
                 break;
-            case 'futur':
-                chosenChannelFullName = "le futur apocalyptique"
+            case 'unknown':
+                chosenChannelFullName = "la terre inconnue"
                 break;
 
         }

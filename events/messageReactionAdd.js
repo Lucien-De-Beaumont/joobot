@@ -6,17 +6,39 @@ module.exports = {
     name: "messageReactionAdd",
     once: false,
     async execute(client, reaction, user) {
+
+        let wh
+        let whOwnerID
         const [results] = await db.query(`SELECT * FROM webhook WHERE nom=${db.escape(reaction.message.author.username)}`)
+        if (results.length > 1) {
+            wh = await client.fetchWebhook(reaction.message.author.id)
+            for (element in results) {
+                if (wh.owner.id == element.discordid) {
+                    whOwnerID = element.discordid
+                    break;
+                }
+            }
+        }
+
+        let query
+        if (whOwnerID && whOwnerID.length) {
+            query = `SELECT * FROM webhook WHERE nom=${db.escape(reaction.message.author.username)} AND discordid = ${db.escape(whOwnerID)}`
+        } else {
+            query = `SELECT * FROM webhook WHERE nom=${db.escape(reaction.message.author.username)}`
+        }
         if (!results[0]) { return }
+        const [results0] = await db.query(query)
+
         if (reaction.emoji.name == '❌') {
-            if (results[0].discordid != user.id) { return }
+            if (results0[0].discordid != user.id) { return }
             reaction.message.delete()
         }
+
         if (reaction.emoji.name == '📝') {
             let webhooks = await reaction.message.channel.fetchWebhooks()
             let webhook = webhooks.find(wh => wh.owner.id == client.user.id)
             reaction.remove()
-            if (results[0].discordid != user.id) { return }
+            if (results0[0].discordid != user.id) { return }
             const filter = msg => msg.channel.type == 'DM'
             let content = reaction.message.content
             const embed = new Discord.MessageEmbed()
@@ -43,10 +65,9 @@ module.exports = {
                 msg.edit({ embeds: [embed2] })
             })
         }
+
         if (reaction.emoji.name == '❓') {
             reaction.remove()
-            const [results0] = await db.query(`SELECT * FROM webhook WHERE discordid=${db.escape(user.id)} AND nom=${db.escape(reaction.message.author.username)}`)
-            if (!(results0 && results0.length)) { return }
             const infoEmbed = new Discord.MessageEmbed()
                 .setTitle("Informations sur un message")
                 .addFields({ name: "Nom du personnage", value: `${results0[0].nom}`, inline: false },
