@@ -25,7 +25,7 @@ module.exports = {
         let nom = interaction.options.getString('nom')
         let prefix = interaction.options.getString('prefixe')
 
-        const [results] = await db.query(`SELECT * FROM webhook WHERE discordid='${interaction.user.id}' AND (prefix=${db.escape(prefix)} OR nom = ${db.escape(nom)}'`)
+        const [results] = await db.query(`SELECT * FROM webhook WHERE discordid='${interaction.user.id}' AND (prefix=${db.escape(prefix)} OR nom = ${db.escape(nom)})`)
 
         if (results[0].prefix == prefix) {
             interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce préfixe : \`${prefix}\`` })
