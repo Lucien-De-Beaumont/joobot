@@ -27,12 +27,14 @@ module.exports = {
 
         const [results] = await db.query(`SELECT * FROM webhook WHERE discordid='${interaction.user.id}' AND (prefix=${db.escape(prefix)} OR nom = ${db.escape(nom)})`)
 
-        if (results[0].prefix == prefix) {
-            interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce préfixe : \`${prefix}\`` })
-        } else if (results[0].nom == nom) {
-            interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce nom : \`${nom}\`` })
-        } else if (results[0].prefix == prefix && results[0].nom == nom) {
-            interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce préfixe et ce nom : \`${prefix}\` -- \`${nom}\`` })
+        if (results && results.length) {
+            if (results[0].prefix == prefix) {
+                return interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce préfixe : \`${prefix}\`` })
+            } else if (results[0].nom == nom) {
+                return interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce nom : \`${nom}\`` })
+            } else if (results[0].prefix == prefix && results[0].nom == nom) {
+                return interaction.reply({ content: `Vous avez déjà un personnage enregistré avec ce préfixe et ce nom : \`${prefix}\` -- \`${nom}\`` })
+            }
         } else {
             const button = new Discord.MessageActionRow()
                 .addComponents(
