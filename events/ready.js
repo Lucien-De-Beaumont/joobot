@@ -86,16 +86,15 @@ module.exports = {
 
             const embed = new Discord.MessageEmbed()
                 .setTitle(`Météo - Horloge`)
-            client.channels.cache.get('1013810288241430528').messages.fetch({ limit: 1 }).then(async messages => {
-                let lastMessage = messages.first();
-                let nowRP = (await client.channels.cache.get('1013810288241430528').messages.fetch(`${lastMessage.id}`))
+            client.channels.cache.get('1013810288241430528').messages.fetch('1013938100591931412').then(async message => {
+                let nowRP = await client.channels.cache.get('1013810288241430528').messages.fetch('1013938100591931412')
                 if (new Date(nowRP.embeds[0].description.slice(0, 19)).getDate() != new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 2)).getDate()) {
                     embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 2)), 'YYYY-MM-DD HH:mm:ss') + '\n' + random(nowRP.embeds[0].description.slice(5, 7)))
                 } else {
-                    embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 2)), 'YYYY-MM-DD HH:mm:ss') + '\n'+ nowRP.embeds[0].description.slice(nowRP.embeds[0].description.length-2))
+                    embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 2)), 'YYYY-MM-DD HH:mm:ss') + '\n' + nowRP.embeds[0].description.slice(nowRP.embeds[0].description.length - 2))
                 }
                 // embed.setDescription(date.format(new Date(1661983200000), 'YYYY-MM-DD HH:mm:ss') + '\n☀️')
-                client.channels.cache.get('1013810288241430528').messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed] }))
+                message.edit({ embeds: [embed] })
             });
         })
 

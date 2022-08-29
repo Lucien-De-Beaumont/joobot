@@ -17,7 +17,7 @@ module.exports = {
 
         const embed = new Discord.MessageEmbed()
             .setTitle(`Météo - Horloge`)
-            embed.setDescription(date.format(new Date(1661983200000), 'YYYY-MM-DD HH:mm:ss'))
+            .setDescription(date.format(new Date(1661983200000), 'YYYY-MM-DD HH:mm:ss') + '\n☀️')
         client.channels.cache.get(eval('config.guild_' + interaction.guild.id + '.channels[\'meteo\']')).send({ embeds: [embed] })
     }
 }
