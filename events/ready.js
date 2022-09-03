@@ -180,7 +180,6 @@ module.exports = {
                 client.channels.cache.get('1005486666309435574').messages.fetch(`1014155811242643556`).then(msg => msg.edit({ files: [new Discord.MessageAttachment(canvas.toBuffer())] }))
             });
         })
-
         updateClock.start();
     },
 };
