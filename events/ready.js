@@ -132,7 +132,7 @@ module.exports = {
             return letter
         }
 
-        let updateClock = new cron.CronJob('*/6 * * * * *', async () => {
+        let updateClock = new cron.CronJob('* * * * *', async () => {
             const embed = new Discord.MessageEmbed()
                 .setTitle(`Météo - Horloge`)
             // .setImage(canvas.toBuffer())
@@ -140,18 +140,18 @@ module.exports = {
                 const lastMessage = messages.first();
                 const nowRP = (await client.channels.cache.get('1013810288241430528').messages.fetch(`${lastMessage.id}`))
                 let emoji
-                if (new Date(nowRP.embeds[0].description.slice(0, 19)).getDate() != new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 2)).getDate()) {
+                if (new Date(nowRP.embeds[0].description.slice(0, 19)).getDate() != new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getDate()) {
                     emoji = random(nowRP.embeds[0].description.slice(5, 7))
-                    embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 2)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
+                    embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
                 } else {
                     emoji = nowRP.embeds[0].description.slice(nowRP.embeds[0].description.length - 3)
-                    embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 2)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
+                    embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
                 }
                 // embed.setDescription(date.format(new Date(1661983200000), 'YYYY-MM-DD HH:mm:ss') + '\n☀️')
                 client.channels.cache.get('1013810288241430528').messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed] }))
-                let minute = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 200)).getMinutes()
-                let hours = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 200)).getHours()
-                const nowDate = date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 200)), 'DD/MM/YYYY')
+                let minute = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getMinutes()
+                let hours = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getHours()
+                const nowDate = date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'DD/MM/YYYY')
                 if (minute < 10) {
                     minute = '0' + minute
                 }

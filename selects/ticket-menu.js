@@ -109,10 +109,6 @@ module.exports = {
                     id: interaction.member.id,
                     allow: ['VIEW_CHANNEL'],
                 },
-                {
-                    id: eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']"),
-                    allow: ['VIEW_CHANNEL'],
-                },
             ],
         }).then(channel => {
             channel.send({ embeds: [embed2], components: [buttons] });
