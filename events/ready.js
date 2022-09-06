@@ -95,7 +95,7 @@ module.exports = {
                     letter = 'Soleil peu couvert'
                     break;
                 case '⛅':
-                    letter = 'Ciel couvert'
+                    letter = 'Nuages prédominants'
                     break;
                 case '🌥️':
                     letter = 'Nuages dominants'
@@ -181,19 +181,20 @@ module.exports = {
             const embed = new Discord.MessageEmbed()
                 .setTitle(`Météo - Horloge`)
             // .setImage(canvas.toBuffer())
-            client.channels.cache.get('1013810288241430528').messages.fetch({ limit: 1 }).then(async messages => {
+            client.channels.cache.get('1016786920933687356').messages.fetch({ limit: 1 }).then(async messages => {
                 const lastMessage = messages.first();
-                const nowRP = (await client.channels.cache.get('1013810288241430528').messages.fetch(`${lastMessage.id}`))
+                const nowRP = (await client.channels.cache.get('1016786920933687356').messages.fetch(`${lastMessage.id}`))
                 let emoji
                 if (new Date(nowRP.embeds[0].description.slice(0, 19)).getDate() != new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getDate()) {
                     emoji = random(nowRP.embeds[0].description.slice(5, 7))
                     embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
                 } else {
-                    emoji = nowRP.embeds[0].description.slice(nowRP.embeds[0].description.length - 3)
+                    emoji = nowRP.embeds[0].description.slice(nowRP.embeds[0].description.length - 2)
                     embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
                 }
                 // embed.setDescription(date.format(new Date(1661983200000), 'YYYY-MM-DD HH:mm:ss') + '\n☀️')
-                client.channels.cache.get('1013810288241430528').messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed] }))
+                nowRP.edit({ embeds: [embed] })
+
                 let minute = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getMinutes()
                 let hours = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getHours()
                 const nowDate = date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'DD/MM/YYYY')
@@ -206,6 +207,7 @@ module.exports = {
 
                 const image = await loadImage('Horloge.png')
                 const imageEmoji = await loadImage(toURL(emoji))
+
                 ctx.drawImage(image, 0, 0)
 
                 ctx.fillStyle = 'rgba(0, 0, 0, 255)'
@@ -222,7 +224,10 @@ module.exports = {
 
                 ctx.drawImage(imageEmoji, 260, 360)
 
-                client.channels.cache.get('1005486666309435574').messages.fetch(`1014155811242643556`).then(msg => msg.edit({ files: [new Discord.MessageAttachment(canvas.toBuffer())] }))
+                client.channels.cache.get('1013810288241430528').messages.fetch({ limit: 1 }).then(async messages => {
+                    const meteoMessage = await client.channels.cache.get('1013810288241430528').messages.fetch(messages.first().id)
+                    meteoMessage.edit({ files: [new Discord.MessageAttachment(canvas.toBuffer())], embeds: [] })
+                })
             });
         })
 
