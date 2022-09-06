@@ -128,8 +128,53 @@ module.exports = {
                     letter = 'Brouillard'
                     break;
             }
-
             return letter
+        }
+
+        let emojiURL
+        function toURL(emoji) {
+            switch (emoji) {
+                case '☀️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/sun_2600-fe0f.png'
+                    break;
+                case '🌤️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/sun-behind-small-cloud_1f324-fe0f.png'
+                    break;
+                case '⛅':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/sun-behind-cloud_26c5.png'
+                    break;
+                case '🌥️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/sun-behind-large-cloud_1f325-fe0f.png'
+                    break;
+                case '🌦️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/sun-behind-rain-cloud_1f326-fe0f.png'
+                    break;
+                case '🌧️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/cloud-with-rain_1f327-fe0f.png'
+                    break;
+                case '☁️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/cloud_2601-fe0f.png'
+                    break;
+                case '🌩️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/cloud-with-lightning_1f329-fe0f.png'
+                    break;
+                case '⛈️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/cloud-with-lightning-and-rain_26c8-fe0f.png'
+                    break;
+                case '🌨️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/cloud-with-snow_1f328-fe0f.png'
+                    break;
+                case '💨':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/dashing-away_1f4a8.png'
+                    break;
+                case '🌪️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/tornado_1f32a-fe0f.png'
+                    break;
+                case '🌫️':
+                    emojiURL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/fog_1f32b-fe0f.png'
+                    break;
+            }
+            return emojiURL
         }
 
         let updateClock = new cron.CronJob('* * * * *', async () => {
@@ -158,12 +203,10 @@ module.exports = {
                 if (hours < 10) {
                     hours = '0' + hours
                 }
-                const image = await loadImage('Horloge.png')
-                ctx.drawImage(image, 0, 0)
 
-                ctx.fillStyle = 'rgba(240, 240, 240, 255)'
-                ctx.font = '110px "Apple Color Emoji"'
-                ctx.fillText(emoji, 240, 450)
+                const image = await loadImage('Horloge.png')
+                const imageEmoji = await loadImage(toURL(emoji))
+                ctx.drawImage(image, 0, 0)
 
                 ctx.fillStyle = 'rgba(0, 0, 0, 255)'
                 ctx.font = '150px Verdana'
@@ -177,10 +220,12 @@ module.exports = {
                 ctx.fillText('Metropolis, USA', 20, 405, 220)
                 ctx.fillText(toLetter(emoji), 20, 450, 220)
 
+                ctx.drawImage(imageEmoji, 260, 360)
+
                 client.channels.cache.get('1005486666309435574').messages.fetch(`1014155811242643556`).then(msg => msg.edit({ files: [new Discord.MessageAttachment(canvas.toBuffer())] }))
             });
         })
-        
+
         updateClock.start();
     },
 };

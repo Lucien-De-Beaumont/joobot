@@ -98,18 +98,23 @@ module.exports = {
                     .setStyle('DANGER')
             )
 
+        let permsArray = [{
+            id: interaction.guild.id,
+            deny: ['VIEW_CHANNEL'],
+        },
+        {
+            id: interaction.member.id,
+            allow: ['VIEW_CHANNEL'],
+        }]
+        for (element of eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']")) {
+            let perms = new Object()
+            perms.id = eval("'" + element + "';")
+            perms.allow = ["VIEW_CHANNEL"]
+            permsArray.push(perms)
+        }
         client.channels.cache.get(eval('config.guild_' + interaction.guild.id + ".channels['category-ticket']")).createChannel(
             `ticket-${interaction.member.displayName}-${Math.round(Math.random() * 100)}`, {
-            permissionOverwrites: [
-                {
-                    id: interaction.guild.id,
-                    deny: ['VIEW_CHANNEL'],
-                },
-                {
-                    id: interaction.member.id,
-                    allow: ['VIEW_CHANNEL'],
-                },
-            ],
+            permissionOverwrites: permsArray,
         }).then(channel => {
             channel.send({ embeds: [embed2], components: [buttons] });
             interaction.reply({ content: `Votre ticket ( <#${channel.id}> ) a bien été créé !\nUn staff s'occupera de vous dès que possible !`, ephemeral: true });
