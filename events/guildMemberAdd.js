@@ -7,7 +7,11 @@ module.exports = {
   once: false,
   async execute(client, member) {
     try { eval('config.guild_' + member.guild.id + ".channels['arrivee']"); eval('config.guild_' + member.guild.id + ".channels['reglement']") } catch (err) { return Logger.debug('fatal error occured:' + err) }
-    member.guild
+    const status = await client.channels.cache.get(eval('config.guild_' + interaction.guild.id + ".channels['data']")).messages.fetch('1017067942548082698')
+    if (status.embeds[0].footer.text == '🔴') {
+      await member.send('Protection antiraid !\nImpossible de rejoindre ce serveur pour le moment.\nMerci de réessayer dans quelques instants.')
+      return member.kick('Protection antiraid !')
+    }
     const embed = new Discord.MessageEmbed()
       .setTitle(`Ho ! Un nouveau membre !`)
       .setImage(`${member.guild.iconURL()}`)

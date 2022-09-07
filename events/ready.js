@@ -14,7 +14,7 @@ module.exports = {
         Logger.client('Je suis ON!')
         // console.log(client.slashCommands.map(cmd => cmd))
 
-        // client.guilds.cache.get('1002135735241023548').commands.set([]);
+        client.guilds.cache.get('1002135735241023548').commands.set([]);
         // client.guilds.cache.get('1002135735241023548').commands.set(client.slashCommands.map(cmd => cmd));
 
         // client.application.commands.set([]);
@@ -180,55 +180,50 @@ module.exports = {
         let updateClock = new cron.CronJob('* * * * *', async () => {
             const embed = new Discord.MessageEmbed()
                 .setTitle(`Météo - Horloge`)
-            // .setImage(canvas.toBuffer())
-            client.channels.cache.get('1016786920933687356').messages.fetch({ limit: 1 }).then(async messages => {
-                const lastMessage = messages.first();
-                const nowRP = (await client.channels.cache.get('1016786920933687356').messages.fetch(`${lastMessage.id}`))
-                let emoji
-                if (new Date(nowRP.embeds[0].description.slice(0, 19)).getDate() != new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getDate()) {
-                    emoji = random(nowRP.embeds[0].description.slice(5, 7))
-                    embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
-                } else {
-                    emoji = nowRP.embeds[0].description.slice(nowRP.embeds[0].description.length - 2)
-                    embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
-                }
-                // embed.setDescription(date.format(new Date(1661983200000), 'YYYY-MM-DD HH:mm:ss') + '\n☀️')
-                nowRP.edit({ embeds: [embed] })
 
-                let minute = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getMinutes()
-                let hours = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getHours()
-                const nowDate = date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'DD/MM/YYYY')
-                if (minute < 10) {
-                    minute = '0' + minute
-                }
-                if (hours < 10) {
-                    hours = '0' + hours
-                }
+            const nowRP = await client.channels.cache.get('1016786920933687356').messages.fetch(`1016799162769080461`)
+            let emoji
+            if (new Date(nowRP.embeds[0].description.slice(0, 19)).getDate() != new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getDate()) {
+                emoji = random(nowRP.embeds[0].description.slice(5, 7))
+                embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
+            } else {
+                emoji = nowRP.embeds[0].description.slice(nowRP.embeds[0].description.length - 2)
+                embed.setDescription(date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'YYYY-MM-DD HH:mm:ss') + '\n' + emoji)
+            }
+            // embed.setDescription(date.format(new Date(1661983200000), 'YYYY-MM-DD HH:mm:ss') + '\n☀️')
+            nowRP.edit({ embeds: [embed] })
 
-                const image = await loadImage('Horloge.png')
-                const imageEmoji = await loadImage(toURL(emoji))
+            let minute = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getMinutes()
+            let hours = new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)).getHours()
+            const nowDate = date.format(new Date(new Date(nowRP.embeds[0].description.slice(0, 19)).setSeconds(new Date(nowRP.embeds[0].description.slice(0, 19)).getSeconds() + 20)), 'DD/MM/YYYY')
+            if (minute < 10) {
+                minute = '0' + minute
+            }
+            if (hours < 10) {
+                hours = '0' + hours
+            }
 
-                ctx.drawImage(image, 0, 0)
+            const image = await loadImage('Horloge.png')
+            const imageEmoji = await loadImage(toURL(emoji))
 
-                ctx.fillStyle = 'rgba(0, 0, 0, 255)'
-                ctx.font = '150px Verdana'
-                ctx.stroke()
-                ctx.fillText(hours, 97, 290, 150)
-                ctx.fillText(minute, 361, 290, 150)
+            ctx.drawImage(image, 0, 0)
 
-                ctx.font = '30px DejaVu Sans Mono, monospace'
-                ctx.fillStyle = 'rgba(240, 240, 240, 255)'
-                ctx.fillText(nowDate, 422, 405, 150)
-                ctx.fillText('Metropolis, USA', 20, 405, 220)
-                ctx.fillText(toLetter(emoji), 20, 450, 220)
+            ctx.fillStyle = 'rgba(0, 0, 0, 255)'
+            ctx.font = '150px Verdana'
+            ctx.stroke()
+            ctx.fillText(hours, 97, 290, 150)
+            ctx.fillText(minute, 361, 290, 150)
 
-                ctx.drawImage(imageEmoji, 260, 360)
+            ctx.font = '30px DejaVu Sans Mono, monospace'
+            ctx.fillStyle = 'rgba(240, 240, 240, 255)'
+            ctx.fillText(nowDate, 422, 405, 150)
+            ctx.fillText('Metropolis, USA', 20, 405, 220)
+            ctx.fillText(toLetter(emoji), 20, 450, 220)
 
-                client.channels.cache.get('1013810288241430528').messages.fetch({ limit: 1 }).then(async messages => {
-                    const meteoMessage = await client.channels.cache.get('1013810288241430528').messages.fetch(messages.first().id)
-                    meteoMessage.edit({ files: [new Discord.MessageAttachment(canvas.toBuffer())], embeds: [] })
-                })
-            });
+            ctx.drawImage(imageEmoji, 260, 360)
+
+            const meteoMessage = await client.channels.cache.get('1013810288241430528').messages.fetch('1016795896563904633')
+            meteoMessage.edit({ files: [new Discord.MessageAttachment(canvas.toBuffer())], embeds: [] })
         })
 
         updateClock.start();

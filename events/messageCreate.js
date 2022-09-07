@@ -34,11 +34,17 @@ module.exports = {
     if (message.content.startsWith(prefix)) {
       let args = message.content.slice(prefix.length).trim().split(/ +/g);
       let content = args.slice(0).join(" ").replace(/prefix/i);
+      let ping
       if (message.reference !== null) {
         msg = await client.channels.cache.get(message.channel.id).messages.fetch(message.reference.messageId)
         if (!(msg.content.includes('> ') && msg.content.includes('Réponse à') && msg.content.includes('\[Message initial\]\('))) {
-          const [results0] = await db.query(`SELECT * FROM webhook WHERE iconURL = '${msg.author.displayAvatarURL()}' OR nom = '${msg.author.username}'`)
-          content = '> ' + msg.content.replaceAll('\n', '\n> ') + '\n_Réponse à ' + msg.author.username + ' ( <@' + results0[0].discordid + '> )' + '_ —— [Message initial](' + msg.url + ')\n\n' + content
+          if (msg.author.bot) {
+            const [results0] = await db.query(`SELECT * FROM webhook WHERE iconURL = '${msg.author.displayAvatarURL()}' OR nom = '${msg.author.username}'`)
+            ping = results0[0].discordid
+          } else {
+            ping = msg.author.id
+          }
+          content = '> ' + msg.content.replaceAll('\n', '\n> ') + '\n_Réponse à ' + msg.author.username + ' ( <@' + ping + '> )' + '_ —— [Message initial](' + msg.url + ')\n\n' + content
         }
       }
       if (typeof webhook == 'undefined') {
