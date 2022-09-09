@@ -3,6 +3,7 @@ const config = require("../config");
 
 module.exports = {
     name: "rps",
+    roles: [config.guild],
     description: "Pierre, feuille, ciseaux !",
     dmPermission: false,
     hidden: false,

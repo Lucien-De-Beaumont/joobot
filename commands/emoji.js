@@ -4,6 +4,7 @@ const db = require('../utils/connectMYSQL');
 
 module.exports = {
     name: "emoji",
+    roles: [config.perms['adminPerms']],
     description: "Créer / Supprimer un emoji sur le serveur",
     dmPermission: false,
     hidden: false,
@@ -33,9 +34,6 @@ module.exports = {
         let action = interaction.options.getString("action")
         let nom = interaction.options.getString("nom")
         let emoji = interaction.options.getString("emoji")
-
-        try { eval('config.guild_' + interaction.guild.id + ".perms['adminPerms']") } catch (err) { return Logger.debug('fatal error occured:' + err) }
-        if(!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['adminPerms']").includes(r.id))){ return interaction.reply({content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true})}
 
         if (action == 'create') {
             if (nom === null) { return }

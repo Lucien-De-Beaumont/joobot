@@ -5,6 +5,7 @@ const date = require('date-and-time');
 
 module.exports = {
     name: "info",
+    roles: [config.guild],
     description: "Trouver les informations sur un personnage RP",
     dmPermission: true,
     hidden: false,

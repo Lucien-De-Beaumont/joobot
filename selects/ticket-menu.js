@@ -6,7 +6,6 @@ module.exports = {
     name: 'ticket-menu',
     async runInteraction(client, interaction) {
 
-        try { eval('config.guild_' + interaction.guild.id + ".channels['category-ticket']"); eval('config.guild_' + interaction.guild.id + ".channels['ticket']") } catch (err) { return Logger.debug('fatal error occured:' + err) }
         const embed = new Discord.MessageEmbed()
             .setTitle(`Envoyer un ticket à l'équipe de modération`)
             .setDescription(`Utilisez le bouton ci-dessous pour envoyer un ticket à notre équipe de modération, qui l'étudiera dans les plus brefs délais !`)
@@ -77,9 +76,9 @@ module.exports = {
                 break;
 
         }
-        client.channels.cache.get(eval('config.guild_' + interaction.guild.id + ".channels['ticket']")).messages.fetch({ limit: 1 }).then(messages => {
+        client.channels.cache.get(config.channels['ticket']).messages.fetch({ limit: 1 }).then(messages => {
             let lastMessage = messages.first();
-            client.channels.cache.get(eval('config.guild_' + interaction.guild.id + ".channels['ticket']")).messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed], components: [ticketMenu] }))
+            client.channels.cache.get(config.channels['ticket']).messages.fetch(`${lastMessage.id}`).then(message => message.edit({ embeds: [embed], components: [ticketMenu] }))
         })
 
         const embed2 = new Discord.MessageEmbed()
@@ -106,19 +105,19 @@ module.exports = {
             id: interaction.member.id,
             allow: ['VIEW_CHANNEL'],
         }]
-        for (element of eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']")) {
+        for (element of config.perms['wholeStaff']) {
             let perms = new Object()
             perms.id = eval("'" + element + "';")
             perms.allow = ["VIEW_CHANNEL"]
             permsArray.push(perms)
         }
-        client.channels.cache.get(eval('config.guild_' + interaction.guild.id + ".channels['category-ticket']")).createChannel(
+        client.channels.cache.get(config.channels['category-ticket']).createChannel(
             `ticket-${interaction.member.displayName}-${Math.round(Math.random() * 100)}`, {
             permissionOverwrites: permsArray,
         }).then(channel => {
             channel.send({ embeds: [embed2], components: [buttons] });
             interaction.reply({ content: `Votre ticket ( <#${channel.id}> ) a bien été créé !\nUn staff s'occupera de vous dès que possible !`, ephemeral: true });
-            channel.send('<@&' + eval('config.guild_' + channel.guild.id + ".perms['wholeStaff']").join('>, <@&') + '>').then(msg => {
+            channel.send('<@&' + config.perms['wholeStaff'].join('>, <@&') + '>').then(msg => {
                 msg.delete()
             })
         })

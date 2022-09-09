@@ -4,6 +4,7 @@ const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "say",
+    roles: [config.perms['wholeStaff']],
     description: "Se mettre dans la peau d'Izu",
     dmPermission: false,
     hidden: false,
@@ -31,9 +32,6 @@ module.exports = {
         let text = interaction.options.getString("texte")
         let snowflake = interaction.options.getString("idmessage")
 
-        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
-
-        if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         interaction.reply('Message envoyé !').then(interaction.deleteReply())
         if (snowflake === null) {
             try { client.channels.cache.get(channel.id).send(text) } catch (err) { console.log(err) }

@@ -5,6 +5,7 @@ const date = require('date-and-time');
 
 module.exports = {
     name: "list",
+    roles: [config.guild],
     description: "Voir la liste des personnages d'un membre",
     hidden: false,
     options: [{

@@ -5,6 +5,7 @@ const date = require('date-and-time');
 
 module.exports = {
     name: "previous-page-button",
+    roles: [config.guild],
 
     async runInteraction(client, interaction) {
         interaction.deferUpdate()

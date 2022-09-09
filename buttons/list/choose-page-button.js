@@ -5,7 +5,7 @@ const date = require('date-and-time');
 
 module.exports = {
     name: "choose-page-button",
-
+    roles: [config.guild],
     async runInteraction(client, interaction) {
         interaction.deferUpdate()
         const message = await interaction.fetchReply()

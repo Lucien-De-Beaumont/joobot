@@ -6,13 +6,12 @@ const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "runtupper",
+    roles: [config.perms['mecano']],
     description: "Insère dans la BDD toutes les données dans tupper.json",
     dmPermission: false,
     hidden: false,
     helpType: "fun",
     async runInteraction(client, interaction) {
-        try { eval('config.guild_' + interaction.guild.id + ".perms['mecano']") } catch (err) { return Logger.debug('fatal error occured:' + err) }
-        if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['mecano']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         let rawdata = fs.readFileSync('tupper.json');
         let student = JSON.parse(rawdata);
         let req = ''

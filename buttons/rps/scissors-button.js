@@ -3,6 +3,7 @@ const config = require("../../config");
 
 module.exports = {
     name: "scissors-button",
+    roles: [config.guild],
 
     async runInteraction(client, interaction) {
         interaction.deferUpdate()

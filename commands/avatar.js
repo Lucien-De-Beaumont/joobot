@@ -4,6 +4,7 @@ const db = require("../utils/connectMYSQL");
 
 module.exports = {
     name: "avatar",
+    roles: [config.guild],
     description: "Attribuer un avatar à un personnage RP",
     dmPermission: true,
     hidden: false,

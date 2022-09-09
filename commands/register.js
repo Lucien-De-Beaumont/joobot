@@ -4,6 +4,7 @@ const db = require("../utils/connectMYSQL");
 
 module.exports = {
     name: "register",
+    roles: [config.guild],
     description: "Créer un nouveau personnage RP",
     dmPermission: true,
     hidden: false,

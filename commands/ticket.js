@@ -4,16 +4,13 @@ const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "ticket",
+    roles: [config.perms['mecano']],
     description: "Envoie l'embed de création de ticket",
     dmPermission: false,
     hidden: false,
     helpType: "fun",
 
     runInteraction(client, interaction) {
-        try { eval('config.guild_' + channel.guild.id + ".channels['ticket']"); eval('config.guild_' + interaction.guild.id + ".perms['mecano']") } catch (err) { return Logger.debug('fatal error occured:' + err)}
-
-        if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['mecano']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
-
         const embed = new Discord.MessageEmbed()
             .setTitle(`Envoyer un ticket à l'équipe de modération`)
             .setThumbnail(`${interaction.guild.iconURL()}`)
@@ -59,6 +56,6 @@ module.exports = {
 
                     ]),
             )
-        client.channels.cache.get(eval('config.guild_' + message.guild.id + '.channels[\'ticket\']')).send({ embeds: [embed], components: [ticketMenu] })
+        client.channels.cache.get(config.channels['ticket']).send({ embeds: [embed], components: [ticketMenu] })
     },
 }

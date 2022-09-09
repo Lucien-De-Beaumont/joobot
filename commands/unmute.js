@@ -4,6 +4,7 @@ const Logger = require("../utils/Logger");
 
 module.exports = {
     name: "unmute",
+    roles: [config.perms['wholeStaff']],
     description: "Rendre la parole à un membre",
     dmPermission: false,
     hidden: false,
@@ -25,9 +26,6 @@ module.exports = {
         let user = interaction.options.getUser("membre")
         let member = interaction.guild.members.cache.find(member => member.id === user.id)
         let unmuteReason = interaction.options.getString("raison")
-
-        try { eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']") } catch (err) { return Logger.debug('fatal error occured:' + err) }
-        if (!interaction.member.roles.cache.some(r => eval('config.guild_' + interaction.guild.id + ".perms['wholeStaff']").includes(r.id))) { return interaction.reply({ content: `Vous n'avez pas les permissions nécessaires !`, ephemeral: true }) }
         const unmuteEmbed = new Discord.MessageEmbed()
             .setTitle("Don de la parole à un membre")
             .setThumbnail(`${client.user.avatarURL()}`)
@@ -40,7 +38,7 @@ module.exports = {
         }
 
         try {
-            member.roles.remove(eval('config.guild_' + message.guild.id + '.roles[\'Mute\']'))
+            member.roles.remove(config.roles['Mute'])
             interaction.reply({ embeds: [unmuteEmbed] })
         } catch (err) {
             interaction.reply(`Oops!\nIl semblerait que je ne puisse pas rendre la parole à cette personne..\n\n*Causes probables :* \n\`Cette personne a la permission 'ADMINSTRATEUR'\`.\n\`Cette personne est plus élevée que moi dans la liste des membres\`.`)

@@ -4,6 +4,7 @@ const db = require('../utils/connectMYSQL');
 
 module.exports = {
     name: "delete",
+    roles: [config.guild],
     description: "Supprimer l'un de ses personnages RP",
     dmPermission: true,
     hidden: false,
