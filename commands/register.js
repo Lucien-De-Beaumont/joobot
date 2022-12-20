@@ -4,12 +4,10 @@ const db = require("../utils/connectMYSQL");
 
 module.exports = {
     name: "register",
-    roles: [config.guild],
+    roles: [config.perms['wholeStaff']],
     description: "Créer un nouveau personnage RP",
     dmPermission: true,
     hidden: false,
-    helpType: "fun",
-    both: true,
     options: [{
         name: "nom",
         description: "Quel sera le nom de votre personnage RP ?",
@@ -26,7 +24,7 @@ module.exports = {
         let nom = interaction.options.getString('nom')
         let prefix = interaction.options.getString('prefixe')
 
-        const [results] = await db.query(`SELECT * FROM webhook WHERE discordid='${interaction.user.id}' AND (prefix=${db.escape(prefix)} OR nom = ${db.escape(nom)})`)
+        const [results] = await db.query(`SELECT * FROM Icon99 WHERE discordid='${interaction.user.id}' AND (prefix=${db.escape(prefix)} OR nom = ${db.escape(nom)})`)
 
         if (results && results.length) {
             if (results[0].prefix == prefix) {

@@ -17,12 +17,6 @@ module.exports = {
                     .setPlaceholder('Sélectionner une raison...')
                     .addOptions([
                         {
-                            label: 'Dépôt de fiche RP',
-                            description: 'Soumettre une fiche RP.',
-                            value: 'ficherp',
-                            emoji: '📝'
-                        },
-                        {
                             label: 'Demande de création de lieu',
                             description: 'Demander la création d\'un lieu pour RP.',
                             value: 'locationcreate',
@@ -54,10 +48,6 @@ module.exports = {
         let title
 
         switch (interaction.values[0]) {
-            case 'ficherp':
-                description = `Bonjour <@${interaction.member.id}> !\n\nMerci d'avoir contacté l'équipe de modération pour votre **dépôt de fiche RP**. \nAfin que cette dernière ait toutes les chances d'être acceptée, pensez à suivre les indications donnée dans <#1002182423582363668>.\n\nNotre équipe a par ailleurs **déjà** été notifiée de votre dépôt de fiche, merci donc de **ne pas** les mentionner. Une réponse vous sera donnée dans les plus brefs délais.\n\nBonne journée à vous !`;
-                title = `Dépôt de fiche RP`
-                break;
             case 'locationcreate':
                 description = `Bonjour <@${interaction.member.id}> !\n\nMerci d'avoir contacté l'équipe de modération pour votre **demande d'ajout d'un lieu RP**. \nAfin que cette dernière ait toutes les chances d'être acceptée, veuillez décrire votre lieu, la zone dans laquelle il pourraît être inclus, une image pour l'accompagner, son utilité [...].\n\nNotre équipe a par ailleurs **déjà** été notifiée de votre demande d'ajout de lieu, merci donc de **ne pas** les mentionner. Une réponse vous sera donnée dans les plus brefs délais.\n\nBonne journée à vous !`;
                 title = `Demande de création de lieu`

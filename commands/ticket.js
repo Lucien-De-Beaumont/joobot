@@ -24,12 +24,6 @@ module.exports = {
                     .setPlaceholder('Sélectionner une raison...')
                     .addOptions([
                         {
-                            label: 'Fiche RP',
-                            description: 'Soumettre une fiche RP.',
-                            value: 'ficherp',
-                            emoji: '📝'
-                        },
-                        {
                             label: 'Demande de création de lieu',
                             description: 'Demander la création d\'un lieu pour RP.',
                             value: 'locationcreate',

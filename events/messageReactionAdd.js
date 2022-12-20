@@ -9,7 +9,7 @@ module.exports = {
 
         let wh
         let whOwnerID
-        const [results] = await db.query(`SELECT * FROM webhook WHERE nom=${db.escape(reaction.message.author.username)}`)
+        const [results] = await db.query(`SELECT * FROM Icon99 WHERE nom=${db.escape(reaction.message.author.username)}`)
         if (results.length > 1) {
             wh = await client.fetchWebhook(reaction.message.author.id)
             for (element in results) {
@@ -22,9 +22,9 @@ module.exports = {
 
         let query
         if (whOwnerID && whOwnerID.length) {
-            query = `SELECT * FROM webhook WHERE nom=${db.escape(reaction.message.author.username)} AND discordid = ${db.escape(whOwnerID)}`
+            query = `SELECT * FROM Icon99 WHERE nom=${db.escape(reaction.message.author.username)} AND discordid = ${db.escape(whOwnerID)}`
         } else {
-            query = `SELECT * FROM webhook WHERE nom=${db.escape(reaction.message.author.username)}`
+            query = `SELECT * FROM Icon99 WHERE nom=${db.escape(reaction.message.author.username)}`
         }
         if (!results[0]) { return }
         const [results0] = await db.query(query)

@@ -4,7 +4,7 @@ const db = require("../utils/connectMYSQL");
 
 module.exports = {
     name: "avatar",
-    roles: [config.guild],
+    roles: [config.perms['wholeStaff']],
     description: "Attribuer un avatar à un personnage RP",
     dmPermission: true,
     hidden: false,
@@ -19,8 +19,9 @@ module.exports = {
 
     async runInteraction(client, interaction) {
         let prefix = interaction.options.getString('prefixe')
-        const [results] = await db.query(`SELECT * FROM webhook WHERE prefix = ${db.escape(prefix)} AND discordid = ${db.escape(interaction.user.id)}`)
+        const [results] = await db.query(`SELECT * FROM Icon99 WHERE prefix = ${db.escape(prefix)} AND discordid = ${db.escape(interaction.user.id)}`)
         if (!results[0]) { return interaction.reply(`Aucun de vos personnages n'est enregistré avec le préfixe suivant : ${prefix}`) }
+        if (results[0].isbot == 'FALSE') { return interaction.reply(`Impossible d'éditer ce personnage !`) }
         const embed2 = new Discord.MessageEmbed()
             .setTitle(`Modification de l'avatar d'un personnage`)
             .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
@@ -37,7 +38,7 @@ module.exports = {
             let URL = collected.attachments.map(c => c)[0].url
             embed.setImage(`${URL}`)
             interaction.followUp({ embeds: [embed] })
-            db.query(`UPDATE webhook SET iconURL = '${URL}' WHERE prefix = ${db.escape(prefix)} AND discordid = ${db.escape(interaction.user.id)}`)
+            db.query(`UPDATE Icon99 SET iconURL = '${URL}' WHERE prefix = ${db.escape(prefix)} AND discordid = ${db.escape(interaction.user.id)}`)
             let message = await interaction.fetchReply()
             message.edit(`Requête de changement d'avatar complétée !`)
             collector.stop()

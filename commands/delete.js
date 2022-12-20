@@ -4,7 +4,7 @@ const db = require('../utils/connectMYSQL');
 
 module.exports = {
     name: "delete",
-    roles: [config.guild],
+    roles: [config.perms['wholeStaff']],
     description: "Supprimer l'un de ses personnages RP",
     dmPermission: true,
     hidden: false,
@@ -27,7 +27,7 @@ module.exports = {
                     .setStyle('DANGER'),
             )
 
-        const [results0] = await db.query(`SELECT * FROM webhook WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
+        const [results0] = await db.query(`SELECT * FROM Icon99 WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
         if (!(results0 && results0.length)) return interaction.reply(`Vous n'avez aucun personnage avec ce préfixe !`)
         const embed = new Discord.MessageEmbed()
             .setTimestamp()

@@ -14,14 +14,14 @@ module.exports = {
     let webhookName
     let prefix
 
-    const [results] = await db.query(`SELECT * FROM webhook WHERE discordid=${db.escape(message.author.id)} ORDER BY CHAR_LENGTH(prefix) DESC`)
+    const [results] = await db.query(`SELECT * FROM Icon99 WHERE discordid=${db.escape(message.author.id)} ORDER BY CHAR_LENGTH(prefix) DESC`)
 
     for (element of results) {
       allResultsForDate.push(element.date)
     }
 
     for (index in allResultsForDate) {
-      if (message.content.startsWith(results[index].prefix)) {
+      if (results[index].prefix != '' && message.content.startsWith(results[index].prefix)) {
         prefix = results[index].prefix;
         webhookName = results[index].nom;
         imgURL = results[index].iconURL;
@@ -39,7 +39,7 @@ module.exports = {
         msg = await client.channels.cache.get(message.channel.id).messages.fetch(message.reference.messageId)
         if (!(msg.content.includes('> ') && msg.content.includes('Réponse à') && msg.content.includes('\[Message initial\]\('))) {
           if (msg.author.bot) {
-            const [results0] = await db.query(`SELECT * FROM webhook WHERE iconURL = '${msg.author.displayAvatarURL()}' OR nom = '${msg.author.username}'`)
+            const [results0] = await db.query(`SELECT * FROM Icon99 WHERE iconURL = '${msg.author.displayAvatarURL()}' OR nom = '${msg.author.username}'`)
             ping = results0[0].discordid
           } else {
             ping = msg.author.id

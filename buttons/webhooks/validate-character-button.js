@@ -5,7 +5,7 @@ const date = require('date-and-time');
 
 module.exports = {
     name: "validate-character-button",
-    roles: [config.guild],
+    roles: [config.perms['wholeStaff']],
 
     async runInteraction(client, interaction) {
         interaction.deferUpdate()
@@ -23,7 +23,7 @@ module.exports = {
             });
             message.delete()
             interaction.channel.send({ embeds: [embed] })
-            await db.query(`INSERT INTO webhook SET nom = ${db.escape(embed.fields[0].value)}, prefix = ${db.escape(embed.fields[1].value)}, date=${db.escape(date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'))}, discordid=${db.escape(interaction.user.id)}`)
+            await db.query(`INSERT INTO Icon99 SET nom = ${db.escape(embed.fields[0].value)}, prefix = ${db.escape(embed.fields[1].value)}, date=${db.escape(date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'))}, discordid=${db.escape(interaction.user.id)}`)
         } else {
             if (interaction.user.id != message.embeds[0].fields[2].value) { return interaction.followUp({ content: `Vous ne pouvez pas réagir à ce bouton !`, ephemeral: true }) }
             const embed = new Discord.MessageEmbed()
@@ -36,7 +36,7 @@ module.exports = {
             });
             message.delete()
             interaction.channel.send({ embeds: [embed] })
-            await db.query(`INSERT INTO webhook SET nom = ${db.escape(embed.fields[0].value)}, prefix = ${db.escape(embed.fields[1].value)}, date=${db.escape(date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'))}, discordid=${db.escape(interaction.user.id)}`)
+            await db.query(`INSERT INTO Icon99 SET nom = ${db.escape(embed.fields[0].value)}, prefix = ${db.escape(embed.fields[1].value)}, isbot='TRUE', date=${db.escape(date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'))}, discordid=${db.escape(interaction.user.id)}`)
         }
     }
 }  

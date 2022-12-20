@@ -4,7 +4,7 @@ const db = require('../../utils/connectMYSQL')
 
 module.exports = {
     name: "refuse-character-button",
-    roles: [config.guild],
+    roles: [config.perms['wholeStaff']],
 
     async runInteraction(client, interaction) {
         interaction.deferUpdate()

@@ -23,7 +23,7 @@ module.exports = {
 
     async runInteraction(client, interaction) {
         let state = interaction.options.getString("etat")
-        const msg = await client.channels.cache.get(config.channels['data']).messages.fetch('1017067942548082698')
+        const msg = await client.channels.cache.get(config.channels['data']).messages.fetch('1018173691932180492')
         if (state == msg.embeds[0].footer.text) {
             interaction.reply({ content: 'Le serveur est déjà dans cet état !', ephemeral: true })
         } else {

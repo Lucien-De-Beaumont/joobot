@@ -18,14 +18,12 @@ module.exports = {
             .setFooter({ text: 'Utilise ce plan pour connaître les différentes zones accessibles !', iconURL: `${client.user.displayAvatarURL()}` });
         let description = ""
 
-        for (categoryID in config.zones.categories) {
-            description = description + '\n\n' + client.channels.cache.get(config.zones.categories[categoryID]).name + '\n'
-            client.channels.cache.get(config.zones.categories[categoryID]).children.map(c => c).sort((a, b) => a.rawPosition - b.rawPosition).forEach(channel => {
+            description = description + '\n\n' + client.channels.cache.get(interaction.channel.parentId).name + '\n'
+            client.channels.cache.get(interaction.channel.parentId).children.map(c => c).sort((a, b) => a.rawPosition - b.rawPosition).forEach(channel => {
                 description = description + '\n<#' + channel.id + '>'
             })
-        }
 
-        embed.setDescription(description)
-        client.channels.cache.get(config.channels['plan-environs']).send({ embeds: [embed] })
+            embed.setDescription(description)
+            client.channels.cache.get(interaction.channel.id).send({ embeds: [embed] })
     }
 }

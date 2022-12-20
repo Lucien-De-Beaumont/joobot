@@ -13,7 +13,7 @@ module.exports = {
         let numberPages = message.embeds[0].footer.text.slice(5, message.embeds[0].footer.text.indexOf(' sur'))
         let maxNumberPages = parseInt(message.embeds[0].footer.text.slice(message.embeds[0].footer.text.indexOf('sur ') + 4))
 
-        const [results0] = await db.query(`SELECT * FROM webhook WHERE discordid=${db.escape(interaction.guild.members.cache.find(member => member.displayAvatarURL() == message.embeds[0].thumbnail.url).id)} ORDER BY nom ASC LIMIT 5 OFFSET ${((numberPages - 2) * 5)}`);
+        const [results0] = await db.query(`SELECT * FROM Icon99 WHERE discordid=${db.escape(interaction.guild.members.cache.find(member => member.displayAvatarURL() == message.embeds[0].thumbnail.url).id)} AND isbot = 'FALSE' ORDER BY nom ASC LIMIT 5 OFFSET ${((numberPages - 2) * 5)}`);
 
         if (interaction.member.displayName != message.embeds[0].author.name.slice('Demandé par '.length)) { return interaction.followUp({ content: `Vous ne pouvez pas réagir à ce bouton !`, ephemeral: true }) }
         const listEmbed = new Discord.MessageEmbed()

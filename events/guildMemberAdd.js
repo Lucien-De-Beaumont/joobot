@@ -6,7 +6,7 @@ module.exports = {
   name: "guildMemberAdd",
   once: false,
   async execute(client, member) {
-    const status = await client.channels.cache.get(config.channels['data']).messages.fetch('1017067942548082698')
+    const status = await client.channels.cache.get(config.channels['data']).messages.fetch('1018173691932180492')
     if (status.embeds[0].footer.text == '🔴') {
       await member.send('Protection antiraid !\nImpossible de rejoindre ce serveur pour le moment.\nMerci de réessayer dans quelques instants.')
       return member.kick('Protection antiraid !')

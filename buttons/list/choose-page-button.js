@@ -21,7 +21,7 @@ module.exports = {
             fieldOfSearch = db.escape('%' + collected.content + '%')
             collector.stop()
 
-            const [results0] = await db.query(`SELECT * FROM webhook WHERE discordid=${db.escape(interaction.guild.members.cache.find(member => member.displayAvatarURL() == message.embeds[0].thumbnail.url).id)} AND nom LIKE ${fieldOfSearch} ORDER BY nom ASC LIMIT 5`);
+            const [results0] = await db.query(`SELECT * FROM Icon99 WHERE discordid=${db.escape(interaction.guild.members.cache.find(member => member.displayAvatarURL() == message.embeds[0].thumbnail.url).id)} AND isbot = 'FALSE' AND nom LIKE ${fieldOfSearch} ORDER BY nom ASC LIMIT 5`);
 
             const listEmbed = new Discord.MessageEmbed()
                 .setTitle(message.embeds[0].title)

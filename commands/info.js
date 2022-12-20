@@ -20,7 +20,7 @@ module.exports = {
     async runInteraction(client, interaction) {
         let prefix = interaction.options.getString("prefixe")
 
-        const [results0] = await db.query(`SELECT * FROM webhook WHERE prefix=${db.escape(prefix)}`)
+        const [results0] = await db.query(`SELECT * FROM Icon99 AND isbot = 'FALSE' WHERE prefix=${db.escape(prefix)}`)
         if (!(results0 && results0.length)) { return interaction.reply(`Aucun personnage RP avec le préfixe suivant n'existe : \`${prefix}\``) }
         const infoEmbed = new Discord.MessageEmbed()
             .setTitle("Informations sur " + results0[0].nom)

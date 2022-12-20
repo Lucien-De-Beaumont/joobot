@@ -21,7 +21,7 @@ module.exports = {
         if (membre === null) {
             membre = interaction.member
         }
-        const [results0] = await db.query(`SELECT * FROM webhook WHERE discordid=${db.escape(membre.id)} ORDER BY nom ASC`)
+        const [results0] = await db.query(`SELECT * FROM Icon99 WHERE discordid=${db.escape(membre.id)} AND isbot = 'FALSE' ORDER BY nom ASC`)
         if (!(results0 && results0.length)) { return interaction.reply(`${membre.displayName} n'a aucune personnage RP pour le moment`) }
         const listEmbed = new Discord.MessageEmbed()
             .setTitle(`Personnages de ${membre.displayName}`)

@@ -4,7 +4,7 @@ const db = require('../utils/connectMYSQL');
 
 module.exports = {
     name: "modify",
-    roles: [config.guild],
+    roles: [config.perms['wholeStaff']],
     description: "Modifier l'un de ses personnages RP",
     dmPermission: true,
     hidden: false,
@@ -35,7 +35,7 @@ module.exports = {
         let option = interaction.options.getString("option")
         let newParameter = interaction.options.getString("donnee")
 
-        const [results0] = await db.query(`SELECT * FROM webhook WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
+        const [results0] = await db.query(`SELECT * FROM Icon99 WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
         if (!(results0.length && results0)) return interaction.reply(`Vous n'avez pas de personnage avec le préfixe suivant : \`${prefix}\``)
         if (results0[0].prefix == newParameter) {
             return interaction.reply(`Vous avez déjà un personnage avec le préfixe suivant : \`${prefix}\``)
@@ -43,7 +43,7 @@ module.exports = {
         if (results0[0].nom == newParameter) {
             return interaction.reply(`Vous avez déjà un personnage avec le nom suivant : \`${prefix}\``)
         }
-        db.query(`UPDATE webhook SET ${db.escape(option).slice(1, db.escape(option).length - 1)} = ${db.escape(newParameter)} WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
+        db.query(`UPDATE Icon99 SET ${db.escape(option).slice(1, db.escape(option).length - 1)} = ${db.escape(newParameter)} WHERE discordid = ${db.escape(interaction.user.id)} AND prefix=${db.escape(prefix)}`)
         const embed = new Discord.MessageEmbed()
             .setTitle(`Mise à jour de ${results0[0].nom} effectuée`)
             .setTimestamp()
